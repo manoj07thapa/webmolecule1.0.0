@@ -7,8 +7,8 @@ const Index = () => {
     <div>
       <div className="flex flex-col space-y-4 text-gray-900">
         {courses.map((s) => (
-          <Link href={`/courses/${s}`}>
-            <a key={s}>{s}</a>
+          <Link href={`/courses/${s}`} key={s}>
+            <a>{s}</a>
           </Link>
         ))}
       </div>
