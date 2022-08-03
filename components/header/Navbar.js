@@ -1,4 +1,5 @@
 import Link from "next/link";
+const courses = ["react", "vue", "next"];
 const Navbar = () => {
   return (
     <div className="bg-slate-900">
@@ -14,6 +15,11 @@ const Navbar = () => {
           <Link href="/contact">
             <a>Contact</a>
           </Link>
+          {courses.map((c) => (
+            <Link href={`/courses/${c}`}>
+              <a>{c}</a>
+            </Link>
+          ))}
         </div>
       </nav>
     </div>
