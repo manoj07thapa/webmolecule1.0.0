@@ -16,7 +16,7 @@ const Navbar = () => {
             <a>Contact</a>
           </Link>
           {courses.map((c) => (
-            <Link href={`/courses/${c}`}>
+            <Link href={`/courses/${c}`} key={c}>
               <a>{c}</a>
             </Link>
           ))}
