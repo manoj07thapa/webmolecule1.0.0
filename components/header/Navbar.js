@@ -20,20 +20,6 @@ import { useRouter } from "next/router";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-const MyLink = React.forwardRef((props, ref) => {
-  let { href, children, ...rest } = props;
-  return (
-    <Link href={href}>
-      <a
-        ref={ref}
-        {...rest}
-        className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-100"
-      >
-        {children}
-      </a>
-    </Link>
-  );
-});
 
 export const courses = [
   {
@@ -126,7 +112,21 @@ export const solutions = [
   },
 ];
 
-export default function Navbar({}) {
+export default function Navbar() {
+  const MyLink = React.forwardRef((props, ref) => {
+    let { href, children, ...rest } = props;
+    return (
+      <Link href={href}>
+        <a
+          ref={ref}
+          {...rest}
+          className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-100"
+        >
+          {children}
+        </a>
+      </Link>
+    );
+  });
   const router = useRouter();
   return (
     <Popover className="relative bg-slate-900">
