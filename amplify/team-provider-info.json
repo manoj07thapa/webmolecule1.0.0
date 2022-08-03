@@ -1,15 +1,15 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-webmolecule100-dev-131746-authRole",
-      "UnauthRoleArn": "arn:aws:iam::469175017431:role/amplify-webmolecule100-dev-131746-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::469175017431:role/amplify-webmolecule100-dev-131746-authRole",
+      "AuthRoleName": "amplify-webmolecule100-dev-123303-authRole",
+      "UnauthRoleArn": "arn:aws:iam::469175017431:role/amplify-webmolecule100-dev-123303-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::469175017431:role/amplify-webmolecule100-dev-123303-authRole",
       "Region": "ap-south-1",
-      "DeploymentBucketName": "amplify-webmolecule100-dev-131746-deployment",
-      "UnauthRoleName": "amplify-webmolecule100-dev-131746-unauthRole",
-      "StackName": "amplify-webmolecule100-dev-131746",
-      "StackId": "arn:aws:cloudformation:ap-south-1:469175017431:stack/amplify-webmolecule100-dev-131746/4f8d7270-1235-11ed-83ea-0af1b5c394b2",
-      "AmplifyAppId": "d1hvkbbi2x8zvq"
+      "DeploymentBucketName": "amplify-webmolecule100-dev-123303-deployment",
+      "UnauthRoleName": "amplify-webmolecule100-dev-123303-unauthRole",
+      "StackName": "amplify-webmolecule100-dev-123303",
+      "StackId": "arn:aws:cloudformation:ap-south-1:469175017431:stack/amplify-webmolecule100-dev-123303/3b5c7da1-12f8-11ed-8878-0a65c26b66da",
+      "AmplifyAppId": "d274nlv993oxma"
     }
   }
 }
