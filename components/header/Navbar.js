@@ -5,7 +5,7 @@ import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { MyLink } from "./MyLink";
+import MyLink from "./MyLink";
 import { courses, solutions } from "./navData";
 
 function classNames(...classes) {
@@ -247,8 +247,8 @@ export default function Navbar({}) {
                 <nav className="grid gap-y-8">
                   {solutions.map((item) => (
                     <Popover.Button
-                      key={item.name}
-                      href={item.href}
+                      key={item.key}
+                      href={`/solutions/${item.key}`}
                       as={MyLink}
                     >
                       <item.icon
@@ -275,8 +275,8 @@ export default function Navbar({}) {
                 <div className="grid grid-cols-2 gap-4">
                   {courses.map((item) => (
                     <Popover.Button
-                      key={item.name}
-                      href={item.href}
+                      key={item.key}
+                      href={`/courses/${item.key}`}
                       as={MyLink}
                     >
                       <span className="text-base font-medium text-gray-900">
