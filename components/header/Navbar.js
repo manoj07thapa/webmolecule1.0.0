@@ -134,14 +134,7 @@ export default function Navbar({}) {
         <div className="flex items-center justify-between py-6 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <Link href="/">
-              <a>
-                <span className="sr-only">Workflow</span>
-                <img
-                  className="h-8 w-auto sm:h-10"
-                  src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                  alt=""
-                />
-              </a>
+              <a className="text-white">Web Molecule</a>
             </Link>
           </div>
           <div className="-my-2 -mr-2 md:hidden">
@@ -336,11 +329,7 @@ export default function Navbar({}) {
             <div className="px-5 pt-5 pb-6">
               <div className="flex items-center justify-between">
                 <Popover.Button as={MyLink} href="/">
-                  <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                    alt="Workflow"
-                  />
+                  <span className="text-white">Webmolecule</span>
                 </Popover.Button>
 
                 <div className="-mr-2">
