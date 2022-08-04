@@ -1,4 +1,6 @@
 import Link from "next/link";
+import SolnPopoverMenu from "./SolnPopoverMenu";
+import CoursePopoverMenu from "./CoursePopoverMenu";
 
 export default function Navbar() {
   return (
@@ -9,13 +11,15 @@ export default function Navbar() {
             <a>WebMolecule</a>
           </Link>
         </div>
-        <div className="space-x-12">
-          <Link href="/solutions">
+        <div className="space-x-12 flex items-center">
+          {/* <Link href="/solutions">
             <a>Solutions</a>
-          </Link>
-          <Link href="/courses">
+          </Link> */}
+          <SolnPopoverMenu />
+          <CoursePopoverMenu />
+          {/* <Link href="/courses">
             <a>courses</a>
-          </Link>
+          </Link> */}
           <Link href="/contact">
             <a>Contact</a>
           </Link>
