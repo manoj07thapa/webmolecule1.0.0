@@ -2,3 +2,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer components {
+    .field-error {
+      @apply ring-1 ring-red-500 focus:outline-none border-red-500;
+    }
+    .field{
+      @apply w-full rounded-md  text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-500
+    }
+  }

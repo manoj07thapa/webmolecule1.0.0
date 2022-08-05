@@ -1,0 +1,15 @@
+{
+  "resourceName": "webmolecule",
+  "policyUUID": "8a1dbee5",
+  "bucketName": "webmolecule100cdc23264028940a19a053767c1eba18b",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE"
+}

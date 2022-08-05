@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { Auth } from "aws-amplify";
 import { useRouter } from "next/router";
-import Login from "../../components/auth/Login";
+import UserConfirmation from "../../components/auth/UserConfirmation";
 
-function SignIn() {
+function ConfirmUser() {
   const router = useRouter();
 
   useEffect(() => {
@@ -16,12 +16,11 @@ function SignIn() {
     }
     onAppLoad();
   }, []);
-
   return (
     <div className="min-h-screen w-full bg-[url('/architect.svg')]  ">
-      <Login />
+      <UserConfirmation />
     </div>
   );
 }
 
-export default SignIn;
+export default ConfirmUser;

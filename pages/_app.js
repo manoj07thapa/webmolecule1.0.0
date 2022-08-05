@@ -1,11 +1,12 @@
 import "../styles/globals.css";
 import { Fragment } from "react";
-import Navbar1 from "../components/header/Navbar1";
+import Navbar from "../components/header/Navbar";
+import "../amplifyConfig";
 
 function MyApp({ Component, pageProps }) {
   return (
     <Fragment>
-      <Navbar1 />
+      <Navbar />
       <Component {...pageProps} />
     </Fragment>
   );
