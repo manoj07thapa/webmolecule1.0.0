@@ -2,7 +2,7 @@ import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { Fragment } from "react";
 import { useRouter } from "next/router";
-const courses = [
+export const courses = [
   {
     name: "Frontend",
     description: "Measure actions your users take",
@@ -32,12 +32,12 @@ const CoursePopoverMenu = () => {
           <Popover.Button
             className={`
             ${open ? "" : "text-opacity-90"}
-            group inline-flex items-center rounded-md bg-orange-700 px-3 py-2 text-base font-medium text-white hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
+            group inline-flex items-center rounded-md  px-3 py-2 text-base font-medium text-white hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 hover:text-violet-500 transition ease-in-out`}
           >
-            <span>Courses</span>
+            <span className="font-semibold text-sm tracking-wide">Courses</span>
             <ChevronDownIcon
               className={`${open ? "" : "text-opacity-70"}
-              ml-2 h-5 w-5 text-orange-300 transition duration-150 ease-in-out group-hover:text-opacity-80`}
+              ml-2 h-5 w-5 text-white transition duration-150 ease-in-out group-hover:text-opacity-80 `}
               aria-hidden="true"
             />
           </Popover.Button>
@@ -57,7 +57,7 @@ const CoursePopoverMenu = () => {
                     {courses.map((item) => (
                       <div
                         key={item.name}
-                        className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                        className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                       >
                         <button
                           className="flex items-center"
@@ -72,7 +72,7 @@ const CoursePopoverMenu = () => {
                             <p className="text-sm font-medium text-gray-900">
                               {item.name}
                             </p>
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm text-gray-500 ">
                               {item.description}
                             </p>
                           </div>
