@@ -26,7 +26,6 @@ function ForgotPasswordSubmit() {
   };
 
   const onSubmit = async (values, actions) => {
-    console.log("Values", values);
     const { username, code, newPassword } = values;
     const new_password = newPassword;
     try {
@@ -34,7 +33,9 @@ function ForgotPasswordSubmit() {
 
       router.push("/auth/signIn");
     } catch (error) {
-      console.log("error ConfirmUserg up:", error);
+      if (error) {
+        actions.setErrors(error.message); //toDO: backend validation
+      }
     }
   };
   return (
@@ -58,7 +59,7 @@ function ForgotPasswordSubmit() {
               onSubmit={onSubmit}
               validationSchema={forgotPasswordSubmitSchema}
             >
-              {({ errors, isSubmitting, values }) => (
+              {({ errors }) => (
                 <Form className="mt-6 ">
                   <label htmlFor="email w-full">
                     <span className="mb-2 block text-sm font-semibold text-gray-500">

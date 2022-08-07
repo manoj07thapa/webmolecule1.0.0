@@ -15,7 +15,6 @@ function Login() {
   };
 
   const onSubmit = async (values, actions) => {
-    console.log("Values", values);
     const { username, password } = values;
     try {
       const user = await Auth.signIn({
@@ -24,7 +23,9 @@ function Login() {
       });
       router.push("/");
     } catch (error) {
-      console.log("error signing up:", error);
+      if (error) {
+        actions.setErrors(error.message); //toDO: backend validation
+      }
     }
   };
   return (
@@ -50,14 +51,14 @@ function Login() {
                 validationSchema={loginSchema}
                 className=" accent-green-900"
               >
-                {({ errors, isSubmitting, values }) => (
+                {({ errors }) => (
                   <Form className="space-y-5">
                     <div>
                       <label
                         htmlFor="username "
                         className="mb-1 block text-sm font-semibold tracking-wide text-gray-500"
                       >
-                        Email
+                        User Name
                       </label>
                       <Field
                         name="username"

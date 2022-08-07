@@ -14,7 +14,6 @@ function ConfirmUser() {
   };
 
   const onSubmit = async (values, actions) => {
-    console.log("Values", values);
     const { username, code } = values;
 
     try {
@@ -22,7 +21,9 @@ function ConfirmUser() {
 
       router.push("/auth/signIn");
     } catch (error) {
-      console.log("error ConfirmUserg up:", error);
+      if (error) {
+        actions.setErrors(error.message); //toDO: backend validation
+      }
     }
   };
   return (
@@ -46,11 +47,11 @@ function ConfirmUser() {
               onSubmit={onSubmit}
               validationSchema={userConfirmationSchema}
             >
-              {({ errors, isSubmitting, values }) => (
+              {({ errors }) => (
                 <Form className="mt-7">
                   <label htmlFor="username ">
                     <span className="mb-2 block text-sm font-semibold text-gray-500">
-                      Email
+                      User Name
                     </span>
                     <Field
                       name="username"
@@ -91,7 +92,7 @@ function ConfirmUser() {
                   </div>
                 </Form>
               )}
-            </Formik>{" "}
+            </Formik>
           </div>
         </div>
         <div className="mt-12 flex -skew-y-12  flex-col ">

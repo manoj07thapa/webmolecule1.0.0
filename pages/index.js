@@ -12,7 +12,7 @@ export default function Home() {
       <div className="min-h-screen w-full bg-[url('/graph-paper.svg')] bg-cover ">
         <div className="max-w-7xl mx-auto px-6">
           <h1>Web molecule</h1>
-        </div>{" "}
+        </div>
         <button type="submit" onClick={() => Auth.signOut()}>
           Signout
         </button>

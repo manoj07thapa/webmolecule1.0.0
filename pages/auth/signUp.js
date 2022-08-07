@@ -10,7 +10,6 @@ function SignUp() {
   useEffect(() => {
     async function onAppLoad() {
       const user = await Auth.currentAuthenticatedUser();
-      console.log(user);
       if (user) {
         router.push("/");
       }

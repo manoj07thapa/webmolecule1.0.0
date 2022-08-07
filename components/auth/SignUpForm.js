@@ -15,10 +15,9 @@ function SignUpForm() {
   };
 
   const onSubmit = async (values, actions) => {
-    console.log("Actions", values);
     const { email, password, phoneNumber, fullname } = values;
     try {
-      const { user } = await Auth.signUp({
+      await Auth.signUp({
         username: fullname,
         password,
         attributes: {
@@ -28,7 +27,6 @@ function SignUpForm() {
       });
 
       router.push("/auth/confirmUser");
-      console.log(user);
     } catch (error) {
       if (error) {
         actions.setErrors(error.message); //toDO: backend validation
@@ -51,7 +49,7 @@ function SignUpForm() {
             onSubmit={onSubmit}
             validationSchema={signUpSchema}
           >
-            {({ errors, isSubmitting, values }) => (
+            {({ errors }) => (
               <Form>
                 <div className="mt-8 space-y-4">
                   <div>
@@ -59,7 +57,7 @@ function SignUpForm() {
                       htmlFor="fullname"
                       className="mb-1 block text-sm font-semibold text-gray-500"
                     >
-                      Full Name
+                      User Name
                     </label>
                     <Field
                       name="fullname"
@@ -82,7 +80,7 @@ function SignUpForm() {
                     </label>
                     <Field
                       name="email"
-                      type="text"
+                      type="email"
                       id="email"
                       className={`${
                         errors.email ? "field field-error" : "field"

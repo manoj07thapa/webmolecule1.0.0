@@ -11,7 +11,6 @@ function ForgotPassword() {
   useEffect(() => {
     async function onAppLoad() {
       const user = await Auth.currentAuthenticatedUser();
-      console.log(user);
       if (user) {
         router.push("/");
       }
@@ -24,7 +23,6 @@ function ForgotPassword() {
   };
 
   const onSubmit = async (values, actions) => {
-    console.log("Values", values);
     const { username } = values;
 
     try {
@@ -32,7 +30,9 @@ function ForgotPassword() {
 
       router.push("/auth/forgotPasswordSubmit");
     } catch (error) {
-      console.log("error ConfirmUserg up:", error);
+      if (error) {
+        actions.setErrors(error.message); //toDO: backend validation
+      }
     }
   };
   return (
@@ -54,7 +54,7 @@ function ForgotPassword() {
                 onSubmit={onSubmit}
                 validationSchema={forgotPasswordSchema}
               >
-                {({ errors, isSubmitting, values }) => (
+                {({ errors }) => (
                   <Form>
                     <label htmlFor="username " className="">
                       <span className=" text-lg font-bold tracking-wide text-gray-600 mb-2">
