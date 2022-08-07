@@ -17,12 +17,13 @@ function Login() {
   const onSubmit = async (values, actions) => {
     const { username, password } = values;
     try {
-      const user = await Auth.signIn({
+      await Auth.signIn({
         username,
         password,
       });
       router.push("/");
     } catch (error) {
+      console.log(error);
       if (error) {
         actions.setErrors(error.message); //toDO: backend validation
       }
@@ -92,20 +93,6 @@ function Login() {
                       </div>
                     </div>
                     <div className="mt-4 flex items-center justify-between">
-                      <div className="flex items-center">
-                        <input
-                          id="remember-me"
-                          name="remember-me"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                        />
-                        <label
-                          htmlFor="remember-me"
-                          className="ml-2 block text-sm text-gray-900"
-                        >
-                          Remember me
-                        </label>
-                      </div>
                       <div className="text-sm">
                         <Link href="/auth/forgotPassword">
                           <a className="font-medium text-indigo-500 hover:text-indigo-600">

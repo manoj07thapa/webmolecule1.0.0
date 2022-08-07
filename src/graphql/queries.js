@@ -7,24 +7,16 @@ export const getCourse = /* GraphQL */ `
       id
       title
       subtitle
-      category
       image
       price
-      language
       courseContent {
         topic
         description
         duration
       }
-      rating
-      tutor
-      duration
-      frameworks
-      reqKnowledge
-      level
-      time
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -39,24 +31,16 @@ export const listCourses = /* GraphQL */ `
         id
         title
         subtitle
-        category
         image
         price
-        language
         courseContent {
           topic
           description
           duration
         }
-        rating
-        tutor
-        duration
-        frameworks
-        reqKnowledge
-        level
-        time
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }

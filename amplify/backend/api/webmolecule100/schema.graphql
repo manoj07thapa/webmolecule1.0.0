@@ -1,0 +1,25 @@
+type Course
+  @model(subscriptions: null)
+  @auth(
+    rules: [
+      # allow all guest users (not authenticated) to view books
+      { allow: public, operations: [read], provider: iam }
+      # allow admins to create, update and delete books
+      { allow: groups, groups: ["Admin"] }
+      # allow all authentic,ated users to view books
+      { allow: owner }
+    ]
+  ) {
+  id: ID!
+  title: String!
+  subtitle: String
+  image: String
+  price: Float!
+  courseContent: [Syllabus]
+}
+
+type Syllabus {
+  topic: String
+  description: String
+  duration: String
+}

@@ -10,24 +10,16 @@ export const createCourse = /* GraphQL */ `
       id
       title
       subtitle
-      category
       image
       price
-      language
       courseContent {
         topic
         description
         duration
       }
-      rating
-      tutor
-      duration
-      frameworks
-      reqKnowledge
-      level
-      time
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -40,24 +32,16 @@ export const updateCourse = /* GraphQL */ `
       id
       title
       subtitle
-      category
       image
       price
-      language
       courseContent {
         topic
         description
         duration
       }
-      rating
-      tutor
-      duration
-      frameworks
-      reqKnowledge
-      level
-      time
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -70,24 +54,16 @@ export const deleteCourse = /* GraphQL */ `
       id
       title
       subtitle
-      category
       image
       price
-      language
       courseContent {
         topic
         description
         duration
       }
-      rating
-      tutor
-      duration
-      frameworks
-      reqKnowledge
-      level
-      time
       createdAt
       updatedAt
+      owner
     }
   }
 `;
