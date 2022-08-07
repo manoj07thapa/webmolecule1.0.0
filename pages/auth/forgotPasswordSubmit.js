@@ -1,4 +1,4 @@
-import { useEffect, Fragment } from "react";
+import { Fragment } from "react";
 import { Formik, Field, Form } from "formik";
 import { Auth } from "aws-amplify";
 import { useRouter } from "next/router";
@@ -7,17 +7,6 @@ import { forgotPasswordSubmitSchema } from "../../validation/auth/forgotPassword
 
 function ForgotPasswordSubmit() {
   const router = useRouter();
-
-  useEffect(() => {
-    async function onAppLoad() {
-      const user = await Auth.currentAuthenticatedUser();
-      console.log(user);
-      if (user) {
-        router.push("/");
-      }
-    }
-    onAppLoad();
-  }, []);
 
   const initialValues = {
     username: "",

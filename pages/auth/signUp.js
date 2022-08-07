@@ -1,21 +1,8 @@
-import { useEffect, Fragment } from "react";
-import { Auth } from "aws-amplify";
-import { useRouter } from "next/router";
+import { Fragment } from "react";
 import Head from "next/head";
 import SignUpForm from "../../components/auth/SignUpForm";
 
 function SignUp() {
-  const router = useRouter();
-
-  useEffect(() => {
-    async function onAppLoad() {
-      const user = await Auth.currentAuthenticatedUser();
-      if (user) {
-        router.push("/");
-      }
-    }
-    onAppLoad();
-  }, []);
   return (
     <Fragment>
       <Head>
