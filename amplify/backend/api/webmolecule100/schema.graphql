@@ -13,8 +13,16 @@ type Course
   id: ID!
   title: String!
   subtitle: String
-  image: String
+  category: String!
+  files: [String]
   price: Float!
+  language: String!
+  tutor: String!
+  duration: String!
+  framework: String!
+  reqKnowledge: String!
+  level: String!
+  time: String!
   courseContent: [Syllabus]
 }
 

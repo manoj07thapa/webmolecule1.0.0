@@ -7,8 +7,16 @@ export const getCourse = /* GraphQL */ `
       id
       title
       subtitle
-      image
+      category
+      files
       price
+      language
+      tutor
+      duration
+      framework
+      reqKnowledge
+      level
+      time
       courseContent {
         topic
         description
@@ -31,8 +39,16 @@ export const listCourses = /* GraphQL */ `
         id
         title
         subtitle
-        image
+        category
+        files
         price
+        language
+        tutor
+        duration
+        framework
+        reqKnowledge
+        level
+        time
         courseContent {
           topic
           description

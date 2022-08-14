@@ -91,7 +91,7 @@ export default function Navbar() {
   const router = useRouter();
   return (
     <Popover className="relative bg-slate-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 ">
         <div className="flex justify-between items-center border-b border-gray-800 py-6 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <Link href="/">
@@ -274,7 +274,7 @@ export default function Navbar() {
       >
         <Popover.Panel
           focus
-          className="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
+          className="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden  "
         >
           {({ close }) => (
             <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">

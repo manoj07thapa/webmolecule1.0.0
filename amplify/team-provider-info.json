@@ -19,7 +19,8 @@
         }
       },
       "auth": {
-        "webmolecule100e64940bd": {}
+        "webmolecule100e64940bd": {},
+        "true": {}
       }
     }
   }

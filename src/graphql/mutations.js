@@ -10,8 +10,16 @@ export const createCourse = /* GraphQL */ `
       id
       title
       subtitle
-      image
+      category
+      files
       price
+      language
+      tutor
+      duration
+      framework
+      reqKnowledge
+      level
+      time
       courseContent {
         topic
         description
@@ -32,8 +40,16 @@ export const updateCourse = /* GraphQL */ `
       id
       title
       subtitle
-      image
+      category
+      files
       price
+      language
+      tutor
+      duration
+      framework
+      reqKnowledge
+      level
+      time
       courseContent {
         topic
         description
@@ -54,8 +70,16 @@ export const deleteCourse = /* GraphQL */ `
       id
       title
       subtitle
-      image
+      category
+      files
       price
+      language
+      tutor
+      duration
+      framework
+      reqKnowledge
+      level
+      time
       courseContent {
         topic
         description

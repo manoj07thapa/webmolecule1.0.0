@@ -7,7 +7,13 @@ function MyApp({ Component, pageProps }) {
   return (
     <Fragment>
       <Navbar />
-      <Component {...pageProps} />
+      {Component.PageLayout ? (
+        <Component.PageLayout>
+          <Component {...pageProps} />
+        </Component.PageLayout>
+      ) : (
+        <Component {...pageProps} />
+      )}
     </Fragment>
   );
 }

@@ -115,7 +115,7 @@ function Login() {
             </div>
           </div>
           <div className="mt-6 flex items-center space-x-1 px-4">
-            <p className="text-white">Don't have an account?</p>
+            <p className="text-white">Don&apos;t have an account?</p>
             <Link href="/auth/signUp">
               <a className="text-sm font-semibold text-indigo-500 hover:text-indigo-600">
                 SignUp
