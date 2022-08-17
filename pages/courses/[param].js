@@ -14,6 +14,7 @@ export const getServerSideProps = async (ctx) => {
   if (param === "all") {
     const response = await SSR.API.graphql({
       query: listCourses,
+      authMode: "AWS_IAM",
     });
 
     return {
@@ -26,6 +27,7 @@ export const getServerSideProps = async (ctx) => {
   const response = await SSR.API.graphql({
     query: listCourses,
     variables: { filter: { category: { eq: param } } },
+    authMode: "AWS_IAM",
   });
 
   return {
@@ -37,34 +39,34 @@ export const getServerSideProps = async (ctx) => {
 
 const Course = ({ ssrCourses }) => {
   const { query } = useRouter();
-  const [courses, setCourses] = useState();
-  console.log("COURSES", courses);
+  // const [courses, setCourses] = useState();
+  // console.log("COURSES", courses);
 
-  const fetchCourses = useCallback(async () => {
-    try {
-      const courses = await Promise.all(
-        ssrCourses.map(async (course) => {
-          const images = await Promise.all(
-            course.files.map(async (image) => {
-              const img = await Storage.get(image);
+  // const fetchCourses = useCallback(async () => {
+  //   try {
+  //     const courses = await Promise.all(
+  //       ssrCourses.map(async (course) => {
+  //         const images = await Promise.all(
+  //           course.files.map(async (image) => {
+  //             const img = await Storage.get(image);
 
-              return img;
-            })
-          );
+  //             return img;
+  //           })
+  //         );
 
-          course.s3Images = images;
-          return course;
-        })
-      );
-      setCourses(courses);
-    } catch (error) {
-      console.log("error", error);
-    }
-  }, [ssrCourses]);
+  //         course.s3Images = images;
+  //         return course;
+  //       })
+  //     );
+  //     setCourses(courses);
+  //   } catch (error) {
+  //     console.log("error", error);
+  //   }
+  // }, [ssrCourses]);
 
-  useEffect(() => {
-    fetchCourses();
-  }, [query, , fetchCourses]);
+  // useEffect(() => {
+  //   fetchCourses();
+  // }, [query, , fetchCourses]);
 
   return (
     <Fragment>
@@ -81,7 +83,7 @@ const Course = ({ ssrCourses }) => {
           <main className="sm:col-span-2 md:col-span-6">
             {/* <div>Query:{query.param} </div> */}
             {/* <pre>{JSON.stringify(ssrCourses, null, 4)}</pre> */}
-            {courses ? <CourseCard courses={courses} /> : "LOADING..."}
+            {ssrCourses ? <CourseCard courses={ssrCourses} /> : "LOADING..."}
           </main>
         </div>
         <div>rest of the content</div>
