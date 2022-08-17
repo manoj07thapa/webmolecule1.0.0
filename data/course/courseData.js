@@ -1,9 +1,9 @@
 export const categories = [
-  "Frontend",
-  "Backend",
-  "Fullstack",
-  "WebDesign",
-  "Database",
+  "frontend",
+  "backend",
+  "fullstack",
+  "webDesign",
+  "database",
 ];
 
 export const frontendFrameworks = [
@@ -37,3 +37,5 @@ export const database = ["Mongodb", "Dynamodb", "Postgres", "Sql", "Firestore"];
 
 export const webDesign = ["css", "tailwind"];
 export const fullStack = ["MERNStack"];
+
+export const level = ["Beginners", "Mid-level", "Advance"];

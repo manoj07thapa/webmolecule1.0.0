@@ -12,19 +12,19 @@ export default function FrameworkField() {
   const [frameworks, setFrameworks] = useState([]);
 
   function fetchFrameworks(category) {
-    if (category === "Frontend") {
+    if (category === "frontend") {
       return frontendFrameworks;
     }
-    if (category === "Backend") {
+    if (category === "backend") {
       return backendFrameworks;
     }
-    if (category === "Database") {
+    if (category === "database") {
       return database;
     }
-    if (category === "WebDesign") {
+    if (category === "webDesign") {
       return webDesign;
     }
-    if (category === "Fullstack") {
+    if (category === "fullstack") {
       return fullStack;
     }
   }

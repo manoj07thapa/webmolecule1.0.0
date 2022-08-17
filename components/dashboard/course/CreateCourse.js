@@ -2,9 +2,12 @@ import { Fragment } from "react";
 import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
 import { Storage, API } from "aws-amplify";
 import ImageUploadComponent from "../../upload/ImageUploadComponent";
-import { categories, languages } from "../../../data/course/courseData";
+import { categories, languages, level } from "../../../data/course/courseData";
 import FrameworkField from "./FrameworkField";
 import { createCourse } from "../../../src/graphql/mutations";
+import { MinusCircleIcon, PlusCircleIcon } from "@heroicons/react/solid";
+import ImagePreview from "../../upload/ImagePreview";
+import { courseSchema } from "../../../validation/course/course";
 
 export default function CreateCourse() {
   const initialValues = {
@@ -16,6 +19,9 @@ export default function CreateCourse() {
     language: "",
     courseContent: [{ topic: "", description: "", duration: "" }],
     tutor: "",
+    tutorWho: "",
+    relatedSkills: [""],
+    youLearn: [""],
     duration: "",
     framework: "",
     reqKnowledge: "",
@@ -24,9 +30,6 @@ export default function CreateCourse() {
   };
 
   const handleSubmit = async (values, actions) => {
-    console.log("VALUES", values);
-    values.files.map((f) => console.log("FILE", f.name));
-
     try {
       //uploading the image to s3 one at a time with the file name as the key
       const imageKeys = await Promise.all(
@@ -35,14 +38,15 @@ export default function CreateCourse() {
           return key.key;
         })
       );
-      console.log("IMAGEKEYS", imageKeys);
       values.files = imageKeys;
       const res = await API.graphql({
         query: createCourse,
         variables: { input: values },
         authMode: "AMAZON_COGNITO_USER_POOLS",
       });
-      console.log("RES", res);
+      // if (res.data.createCourse) {
+      //   actions.resetForm();
+      // }
     } catch (error) {
       console.log("ERROR", error);
     }
@@ -50,9 +54,13 @@ export default function CreateCourse() {
 
   return (
     <Fragment>
-      <div className="mt-6">
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-          {({ values, errors, setFieldValue }) => (
+      <div className="mt-6 pb-12">
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          validationSchema={courseSchema}
+        >
+          {({ values, errors, setFieldValue, isSubmitting }) => (
             <Form className="space-y-5">
               <div>
                 <label
@@ -85,6 +93,8 @@ export default function CreateCourse() {
                   name="subtitle"
                   type="text"
                   id="subtitle"
+                  rows="2"
+                  as="textarea"
                   value={values.subtitle}
                   className={`${
                     errors.subtitle ? " field field-error" : " field"
@@ -178,28 +188,7 @@ export default function CreateCourse() {
 
                 <FrameworkField />
               </div>
-              <div className="sm:flex sm:space-x-4">
-                <div className="sm:w-1/2">
-                  <label
-                    htmlFor="tutor"
-                    className="text-gray-400 text-sm block pb-1"
-                  >
-                    Tutor
-                  </label>
-                  <Field
-                    name="tutor"
-                    type="text"
-                    id="tutor"
-                    value={values.tutor}
-                    className={`${
-                      errors.tutor ? " field field-error" : " field "
-                    } `}
-                  />
-
-                  <div className="mt-1 text-xs text-red-500">
-                    {errors.tutor && errors.tutor}
-                  </div>
-                </div>
+              <div className="flex sm:space-x-4">
                 <div className="sm:w-1/2">
                   <label
                     htmlFor="duration"
@@ -220,51 +209,7 @@ export default function CreateCourse() {
                     {errors.duration && errors.duration}
                   </div>
                 </div>
-              </div>
-              <div className="sm:flex sm:space-x-4">
-                <div className="sm:w-2/4">
-                  <label
-                    htmlFor="reqKnowledge"
-                    className="text-gray-400 text-sm block pb-1"
-                  >
-                    Required Knowledge
-                  </label>
-                  <Field
-                    name="reqKnowledge"
-                    type="text"
-                    id="reqKnowledge"
-                    value={values.reqKnowledge}
-                    className={`${
-                      errors.reqKnowledge ? " field field-error" : " field "
-                    } `}
-                  />
-
-                  <div className="mt-1 text-xs text-red-500">
-                    {errors.reqKnowledge && errors.reqKnowledge}
-                  </div>
-                </div>
-                <div className="sm:w-1/4">
-                  <label
-                    htmlFor="level"
-                    className="text-gray-400 text-sm block pb-1"
-                  >
-                    Level
-                  </label>
-                  <Field
-                    name="level"
-                    type="text"
-                    id="level"
-                    value={values.level}
-                    className={`${
-                      errors.level ? " field field-error" : " field "
-                    } `}
-                  />
-
-                  <div className="mt-1 text-xs text-red-500">
-                    {errors.level && errors.level}
-                  </div>
-                </div>
-                <div className="sm:w-1/4">
+                <div className="sm:w-1/2">
                   <label
                     htmlFor="time"
                     className="text-gray-400 text-sm block pb-1"
@@ -285,102 +230,338 @@ export default function CreateCourse() {
                   </div>
                 </div>
               </div>
-              <div>
-                <FieldArray id="courseContent" name="courseContent">
-                  {(fieldArrayProps) => {
-                    const {
-                      push,
-                      remove,
-                      form: {
-                        values: { courseContent },
-                      },
-                    } = fieldArrayProps;
-                    return (
-                      <div>
-                        {courseContent.length &&
-                          courseContent.map((_, index) => (
-                            <div key={index}>
-                              <div className="flex items-center justify-between ">
-                                <label
-                                  htmlFor="courseContent "
-                                  className="w-full space-y-4"
-                                >
-                                  <span className="mb-1 block text-sm font-semibold text-gray-500">
-                                    Course Content
-                                  </span>
-                                  <Field
-                                    name={`courseContent[${index}].topic`}
-                                    type="text"
-                                    id="courseContentTitle"
-                                    className={`${
-                                      errors.length === 0
-                                        ? "w-full rounded-md border-red-500 text-black placeholder-gray-300 shadow ring-1 ring-red-500  focus:outline-none"
-                                        : "w-full rounded-md text-black placeholder-gray-300  focus:border-purple-500 focus:outline-none focus:ring-purple-500"
-                                    }`}
-                                  />
-                                  <Field
-                                    name={`courseContent[${index}].description`}
-                                    type="text"
-                                    id="courseContentDesc"
-                                    as="textarea"
-                                    rows="4"
-                                    className={`${
-                                      errors.length === 0
-                                        ? "w-full rounded-md border-red-500 text-black placeholder-gray-300 shadow ring-1 ring-red-500  focus:outline-none"
-                                        : "w-full rounded-md text-black placeholder-gray-300  focus:border-purple-500 focus:outline-none focus:ring-purple-500"
-                                    }`}
-                                  />
-                                  <Field
-                                    name={`courseContent[${index}].duration`}
-                                    type="text"
-                                    id="courseContentDuration"
-                                    rows="4"
-                                    className={`${
-                                      errors.length === 0
-                                        ? "w-full rounded-md border-red-500 text-black placeholder-gray-300 shadow ring-1 ring-red-500  focus:outline-none"
-                                        : "w-full rounded-md text-black placeholder-gray-300  focus:border-purple-500 focus:outline-none focus:ring-purple-500"
-                                    }`}
-                                  />
-                                  <div className="mt-1 text-xs text-red-500">
-                                    <ErrorMessage
-                                      name={`courseContent.${index}`}
-                                      component="div"
-                                    />
-                                  </div>
-                                </label>
+              <div className="sm:flex sm:space-x-4">
+                <div className="sm:w-1/3">
+                  <label
+                    htmlFor="tutor"
+                    className="text-gray-400 text-sm block pb-1"
+                  >
+                    Tutor
+                  </label>
+                  <Field
+                    name="tutor"
+                    type="text"
+                    id="tutor"
+                    value={values.tutor}
+                    className={`${
+                      errors.tutor ? " field field-error" : " field "
+                    } `}
+                  />
+
+                  <div className="mt-1 text-xs text-red-500">
+                    {errors.tutor && errors.tutor}
+                  </div>
+                </div>
+                <div className="sm:w-2/3 ">
+                  <label
+                    htmlFor="tutorWho"
+                    className="text-gray-400 text-sm block pb-1"
+                  >
+                    Tutor Information
+                  </label>
+                  <Field
+                    name="tutorWho"
+                    type="text"
+                    id="tutorWho"
+                    value={values.tutorWho}
+                    className={`${
+                      errors.tutorWho ? " field field-error" : " field"
+                    } `}
+                  />
+                  <div className="mt-1 text-xs text-red-500">
+                    {errors.tutorWho && errors.tutorWho}
+                  </div>
+                </div>
+              </div>
+              <div className="sm:flex sm:space-x-4">
+                <div className="sm:w-1/3">
+                  <label
+                    htmlFor="level"
+                    className="text-gray-400 text-sm block pb-1"
+                  >
+                    Level
+                  </label>
+                  <Field
+                    as="select"
+                    name="level"
+                    type="text"
+                    id="level"
+                    value={values.level}
+                    className={`${
+                      errors.level ? " field field-error" : " field"
+                    } `}
+                  >
+                    {level.map((c) => (
+                      <option
+                        key={c}
+                        value={c}
+                        className="space-y-12 bg-gray-200 py"
+                      >
+                        {c}
+                      </option>
+                    ))}
+                  </Field>
+                  <div className="mt-1 text-xs text-red-500">
+                    {errors.level && errors.level}
+                  </div>
+                </div>
+                <div className="sm:w-2/3">
+                  <label
+                    htmlFor="reqKnowledge"
+                    className="text-gray-400 text-sm block pb-1"
+                  >
+                    Required Knowledge
+                  </label>
+                  <Field
+                    name="reqKnowledge"
+                    type="text"
+                    id="reqKnowledge"
+                    value={values.reqKnowledge}
+                    className={`${
+                      errors.reqKnowledge ? " field field-error" : " field "
+                    } `}
+                  />
+
+                  <div className="mt-1 text-xs text-red-500">
+                    {errors.reqKnowledge && errors.reqKnowledge}
+                  </div>
+                </div>
+              </div>
+
+              <FieldArray id="relatedSkills" name="relatedSkills">
+                {(fieldArrayProps) => {
+                  const {
+                    push,
+                    remove,
+                    form: {
+                      values: { relatedSkills },
+                    },
+                  } = fieldArrayProps;
+                  return (
+                    <div>
+                      {relatedSkills.length &&
+                        relatedSkills.map((_, index) => (
+                          <div key={index} className="">
+                            <span className="text-gray-400 text-sm block pb-1">
+                              Related stacks
+                            </span>
+                            <div className="flex items-center  ">
+                              <label
+                                htmlFor="relatedSkills "
+                                className="w-full space-y-3"
+                              >
+                                <Field
+                                  name={`relatedSkills[${index}]`}
+                                  type="text"
+                                  id="relatedSkills"
+                                  className={`${
+                                    errors.length === 0
+                                      ? "field field-error"
+                                      : "field placeholder:text-sm placeholder:italic"
+                                  }`}
+                                  placeholder="tech stacks.."
+                                />
+                                <div className="mt-1 text-xs text-red-500">
+                                  {errors.relatedSkills && errors.relatedSkills}
+                                </div>
+                              </label>
+
+                              <div className="ml-4 space-y-2 flex flex-col items-center">
                                 {index > 0 && (
                                   <button
                                     type="button"
                                     onClick={() => remove(index)}
+                                    className=" h-5 w-5"
                                   >
-                                    -
+                                    <MinusCircleIcon />
                                   </button>
                                 )}
                                 <button
                                   type="button"
                                   onClick={() => push()}
-                                  className=""
+                                  className=" h-5 w-5"
                                 >
-                                  +
+                                  <PlusCircleIcon />
                                 </button>
                               </div>
                             </div>
-                          ))}
-                      </div>
-                    );
-                  }}
-                </FieldArray>
-              </div>
+                          </div>
+                        ))}
+                    </div>
+                  );
+                }}
+              </FieldArray>
 
-              <div className="mt-6 px-7 py-4 border border-dashed border-pink-800">
+              <FieldArray id="youLearn" name="youLearn">
+                {(fieldArrayProps) => {
+                  const {
+                    push,
+                    remove,
+                    form: {
+                      values: { youLearn },
+                    },
+                  } = fieldArrayProps;
+                  return (
+                    <div>
+                      {youLearn.length &&
+                        youLearn.map((_, index) => (
+                          <div key={index} className="">
+                            <span className="text-gray-400 text-sm block pb-1">
+                              Skills you will learn
+                            </span>
+                            <div className="flex items-center  ">
+                              <label
+                                htmlFor="youLearn "
+                                className="w-full space-y-3"
+                              >
+                                <Field
+                                  name={`youLearn[${index}]`}
+                                  type="text"
+                                  id="youLearn"
+                                  className={`${
+                                    errors.length === 0
+                                      ? "field field-error"
+                                      : "field placeholder:text-sm placeholder:italic"
+                                  }`}
+                                  placeholder="Skils..."
+                                />
+                                <div className="mt-1 text-xs text-red-500">
+                                  {errors.youLearn && errors.youLearn}
+                                </div>
+                              </label>
+
+                              <div className="ml-4 space-y-2 flex flex-col items-center">
+                                {index > 0 && (
+                                  <button
+                                    type="button"
+                                    onClick={() => remove(index)}
+                                    className=" h-5 w-5"
+                                  >
+                                    <MinusCircleIcon />
+                                  </button>
+                                )}
+                                <button
+                                  type="button"
+                                  onClick={() => push()}
+                                  className=" h-5 w-5"
+                                >
+                                  <PlusCircleIcon />
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  );
+                }}
+              </FieldArray>
+
+              <FieldArray id="courseContent" name="courseContent">
+                {(fieldArrayProps) => {
+                  const {
+                    push,
+                    remove,
+                    form: {
+                      values: { courseContent },
+                    },
+                  } = fieldArrayProps;
+                  return (
+                    <div>
+                      {courseContent.length &&
+                        courseContent.map((_, index) => (
+                          <div key={index} className="">
+                            <span className="text-gray-400 text-sm block pb-1">
+                              Course Content
+                            </span>
+                            <div className="flex items-center justify-between ">
+                              <label
+                                htmlFor="courseContent "
+                                className="w-full space-y-3"
+                              >
+                                <Field
+                                  name={`courseContent[${index}].topic`}
+                                  type="text"
+                                  id="courseContentTitle"
+                                  className={`${
+                                    errors.length === 0
+                                      ? "field field-error"
+                                      : "field placeholder:text-sm placeholder:italic"
+                                  }`}
+                                  placeholder="Topic..."
+                                />
+                                <Field
+                                  name={`courseContent[${index}].description`}
+                                  type="text"
+                                  id="courseContentDesc"
+                                  as="textarea"
+                                  rows="4"
+                                  className={`${
+                                    errors.length === 0
+                                      ? "field field-error"
+                                      : "field placeholder:text-sm placeholder:italic"
+                                  }`}
+                                  placeholder="Description..."
+                                />
+                                <Field
+                                  name={`courseContent[${index}].duration`}
+                                  type="text"
+                                  id="courseContentDuration"
+                                  rows="4"
+                                  className={`${
+                                    errors.length === 0
+                                      ? "field field-error"
+                                      : "field placeholder:text-sm placeholder:italic"
+                                  }`}
+                                  placeholder="Duration..."
+                                />{" "}
+                                <div className="mt-1 text-xs text-red-500">
+                                  {errors.courseContent && errors.courseContent}
+                                </div>
+                              </label>
+
+                              <div className="ml-4 space-y-4">
+                                {index > 0 && (
+                                  <button
+                                    type="button"
+                                    onClick={() => remove(index)}
+                                    className=" h-7 w-7"
+                                  >
+                                    <MinusCircleIcon />
+                                  </button>
+                                )}
+                                <button
+                                  type="button"
+                                  onClick={() => push()}
+                                  className=" h-7 w-7"
+                                >
+                                  <PlusCircleIcon />
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  );
+                }}
+              </FieldArray>
+
+              <div className="mt-6 px-7 py-4 border border-dashed border-pink-600 rounded-md shadow">
                 <ImageUploadComponent setFieldValue={setFieldValue} />
               </div>
-              <button
-                type="submit"
-                className="mt-4 text-medium w-full rounded-md bg-pink-500 px-7 py-4 font-medium uppercase  tracking-wider text-white hover:bg-pink-600 "
-              >
-                Submit
-              </button>
+              <div>
+                <ImagePreview image={values.files} />
+              </div>
+              <div className="mt-12">
+                <button
+                  disabled={isSubmitting}
+                  type="submit"
+                  className={`${
+                    isSubmitting ? "bg-gray-800" : ""
+                  }  text-medium w-full rounded-md bg-pink-500 px-7 py-4 font-semibold uppercase  tracking-wider text-white hover:bg-pink-600 `}
+                >
+                  Submit
+                </button>
+              </div>
             </Form>
           )}
         </Formik>

@@ -11,7 +11,10 @@ const ImageUploadComponent = (props) => {
   return (
     <div>
       {}
-      <div {...getRootProps({ className: "dropzone" })} className="text-white">
+      <div
+        {...getRootProps({ className: "dropzone" })}
+        className="text-white  text-center"
+      >
         <input {...getInputProps()} />
         {isDragActive ? (
           <p>Drop the files here ...</p>

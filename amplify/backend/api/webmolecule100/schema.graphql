@@ -18,6 +18,9 @@ type Course
   price: Float!
   language: String!
   tutor: String!
+  tutorWho: String!
+  relatedSkills: [String!]
+  youLearn: [String!]
   duration: String!
   framework: String!
   reqKnowledge: String!
@@ -30,4 +33,27 @@ type Syllabus {
   topic: String
   description: String
   duration: String
+}
+
+type Resource
+  @model(subscriptions: null)
+  @auth(
+    rules: [
+      # allow all guest users (not authenticated) to view books
+      { allow: public, operations: [read], provider: iam }
+      # allow admins to create, update and delete books
+      { allow: groups, groups: ["Admin"] }
+      # allow all authentic,ated users to view books
+      { allow: owner }
+    ]
+  ) {
+  id: ID!
+  title: String!
+  subtitle: String!
+  subtitle1: String
+  subtitle2: String
+  description: String!
+  page: String!
+  section: String!
+  files: [String]
 }

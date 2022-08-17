@@ -15,6 +15,9 @@ export const createCourse = /* GraphQL */ `
       price
       language
       tutor
+      tutorWho
+      relatedSkills
+      youLearn
       duration
       framework
       reqKnowledge
@@ -45,6 +48,9 @@ export const updateCourse = /* GraphQL */ `
       price
       language
       tutor
+      tutorWho
+      relatedSkills
+      youLearn
       duration
       framework
       reqKnowledge
@@ -75,6 +81,9 @@ export const deleteCourse = /* GraphQL */ `
       price
       language
       tutor
+      tutorWho
+      relatedSkills
+      youLearn
       duration
       framework
       reqKnowledge
@@ -85,6 +94,69 @@ export const deleteCourse = /* GraphQL */ `
         description
         duration
       }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const createResource = /* GraphQL */ `
+  mutation CreateResource(
+    $input: CreateResourceInput!
+    $condition: ModelResourceConditionInput
+  ) {
+    createResource(input: $input, condition: $condition) {
+      id
+      title
+      subtitle
+      subtitle1
+      subtitle2
+      description
+      page
+      section
+      files
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const updateResource = /* GraphQL */ `
+  mutation UpdateResource(
+    $input: UpdateResourceInput!
+    $condition: ModelResourceConditionInput
+  ) {
+    updateResource(input: $input, condition: $condition) {
+      id
+      title
+      subtitle
+      subtitle1
+      subtitle2
+      description
+      page
+      section
+      files
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteResource = /* GraphQL */ `
+  mutation DeleteResource(
+    $input: DeleteResourceInput!
+    $condition: ModelResourceConditionInput
+  ) {
+    deleteResource(input: $input, condition: $condition) {
+      id
+      title
+      subtitle
+      subtitle1
+      subtitle2
+      description
+      page
+      section
+      files
       createdAt
       updatedAt
       owner

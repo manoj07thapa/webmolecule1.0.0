@@ -38,8 +38,8 @@ function ConfirmUser() {
           <div className="-mt-4 h-10 w-4 bg-indigo-500 mix-blend-multiply sm:w-16 md:w-32 lg:w-48"></div>
         </div>
         <div className="w-full max-w-md lg:max-w-lg mt-16">
-          <div className=" mt-4 rounded-sm bg-white  px-12 py-8 shadow-md">
-            <h3 className="mt-4 text-lg font-semibold tracking-wide text-gray-600">
+          <div className=" mt-4 rounded-md bg-violet-100  px-12 py-8 shadow-md">
+            <h3 className="mt-4 text-lg font-semibold tracking-wide text-gray-600 text-center underline">
               Confirm your email with verification code
             </h3>
             <Formik
@@ -50,7 +50,7 @@ function ConfirmUser() {
               {({ errors }) => (
                 <Form className="mt-7">
                   <label htmlFor="username ">
-                    <span className="mb-2 block text-sm font-semibold text-gray-500">
+                    <span className="mb-1 block text-sm font-semibold text-gray-500">
                       User Name
                     </span>
                     <Field
@@ -66,7 +66,7 @@ function ConfirmUser() {
                     </div>
                   </label>
                   <label htmlFor="code" className="">
-                    <span className="mt-4 mb-2 block text-sm font-semibold text-gray-500">
+                    <span className="mt-4 mb-1 block text-sm font-semibold text-gray-500">
                       Verification Code
                     </span>
                     <Field

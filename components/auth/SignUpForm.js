@@ -40,8 +40,8 @@ function SignUpForm() {
         <div className="-mt-4 h-10 w-4 bg-indigo-500 mix-blend-multiply sm:w-16 md:w-32 lg:w-48"></div>
       </div>
       <div className="w-full max-w-md lg:max-w-lg mt-12">
-        <div className=" mt-4 rounded-sm bg-white px-12 py-10 shadow-md">
-          <h3 className="text-lg font-bold tracking-wide text-gray-600">
+        <div className=" mt-4 rounded-md bg-violet-100 px-12 py-10 shadow-md">
+          <h3 className="text-lg font-bold tracking-wide text-gray-600 text-center underline pb-2">
             Sign up for a new account
           </h3>
           <Formik

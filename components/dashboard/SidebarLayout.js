@@ -85,8 +85,16 @@ const SidebarLayout = ({ children }) => {
                               <a>Course</a>
                             </Link>
                           </Disclosure.Panel>
-                          <Disclosure.Panel className=" md:hover:text-gray-300  ">
-                            Home Resource
+                          <Disclosure.Panel
+                            className={`${
+                              router.pathname === "/dashboard/resource/create"
+                                ? "md:text-indigo-400 font-bold"
+                                : ""
+                            } md:hover:text-gray-300`}
+                          >
+                            <Link href="/dashboard/resource/create">
+                              <a>Resource</a>
+                            </Link>
                           </Disclosure.Panel>
                           <Disclosure.Panel className=" md:hover:text-gray-300  ">
                             Solution

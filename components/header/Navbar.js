@@ -1,101 +1,44 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import {
-  BookmarkAltIcon,
-  CalendarIcon,
-  ChartBarIcon,
-  CursorClickIcon,
-  MenuIcon,
-  RefreshIcon,
-  ShieldCheckIcon,
-  SupportIcon,
-  ViewGridIcon,
-  XIcon,
-} from "@heroicons/react/outline";
+import { MenuIcon, XIcon } from "@heroicons/react/outline";
+import { Auth } from "aws-amplify";
 import { ChevronDownIcon } from "@heroicons/react/solid";
-
-const solutions = [
-  {
-    name: "All",
-    description: "Get a better understanding of where ",
-    href: "all",
-    icon: ChartBarIcon,
-  },
-  {
-    name: "Ecommerce",
-    description: "Speak directly to your customers in a",
-    href: "ecommerce",
-    icon: CursorClickIcon,
-  },
-  {
-    name: "Student manageent System",
-    description: "Your customers' data will be safe and secure.",
-    href: "sms",
-    icon: ShieldCheckIcon,
-  },
-  {
-    name: "Human Resource Management System",
-    description: "Connect with third-party tools that you're",
-    href: "hrms",
-    icon: ViewGridIcon,
-  },
-  {
-    name: "Portfolio",
-    description: "Build strategic funnels that will drive ",
-    href: "portfolio",
-    icon: RefreshIcon,
-  },
-];
-
-const courses = [
-  {
-    name: "All Courses",
-    description: "Get all of your questions answered in our ",
-    href: "all",
-    icon: SupportIcon,
-  },
-  {
-    name: "Frontend",
-    description: "Get all of your questions answered in ",
-    href: "frontend",
-    icon: SupportIcon,
-  },
-  {
-    name: "Backend",
-    description: "Learn how to maximize our platform to ",
-    href: "backend",
-    icon: BookmarkAltIcon,
-  },
-  {
-    name: "Web Design",
-    description: "See what meet-ups and other events we ",
-    href: "webDesign",
-    icon: CalendarIcon,
-  },
-  {
-    name: "Aws Amplify",
-    description: "Understand how we take your privacy seriously.",
-    href: "awsAmplify",
-    icon: ShieldCheckIcon,
-  },
-];
+import { courses, solutions } from "../../data/header/navData";
+import UserMenu from "./UserMenu";
+import { Hub } from "aws-amplify";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Navbar() {
+export default function Navbar({}) {
   const router = useRouter();
+
+  const [user, setUser] = useState(null);
+
+  Hub.listen("auth", (data) => {
+    console.log(data.payload.data);
+    switch (data.payload.event) {
+      case "signIn":
+        console.log("user signed in");
+        setUser(data.payload.data);
+        break;
+      case "signOut":
+        console.log("user signed out");
+        setUser(null);
+    }
+  });
+
   return (
     <Popover className="relative bg-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 ">
         <div className="flex justify-between items-center border-b border-gray-800 py-6 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <Link href="/">
-              <a className="text-lg font-extrabold tracking-wider">
+              <a className="text-xl font-extrabold tracking-wider">
                 WebMolecule
               </a>
             </Link>
@@ -138,7 +81,7 @@ export default function Navbar() {
                     <Popover.Panel className="absolute z-10 -ml-4 mt-3 transform px-2 w-screen max-w-md sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2">
                       {({ close }) => (
                         <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
-                          <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
+                          <div className="relative grid gap-6 bg-violet-100 px-5 py-6 sm:gap-8 sm:p-8">
                             {solutions.map((item) => (
                               <div
                                 key={item.name}
@@ -206,7 +149,7 @@ export default function Navbar() {
                     <Popover.Panel className="absolute z-10 left-1/2 transform -translate-x-1/2 mt-3 px-2 w-screen max-w-md sm:px-0">
                       {({ close }) => (
                         <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
-                          <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
+                          <div className="relative grid gap-6 bg-violet-100 px-5 py-6 sm:gap-8 sm:p-8">
                             {courses.map((item) => (
                               <div
                                 key={item.name}
@@ -248,17 +191,24 @@ export default function Navbar() {
               </a>
             </Link>
           </Popover.Group>
+
           <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-            <Link href="/auth/signIn">
-              <a className="whitespace-nowrap text-base font-medium hover:text-gray-200 transition ease-in-out">
-                Sign in
-              </a>
-            </Link>
-            <Link href="/auth/signUp">
-              <a className=" transition ease-in-out ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium hover:text-gray-200 bg-indigo-600 hover:bg-indigo-700">
-                Sign up
-              </a>
-            </Link>
+            {user && <UserMenu />}
+
+            {!user && (
+              <div>
+                <Link href="/auth/signIn">
+                  <a className="whitespace-nowrap text-base font-medium hover:text-gray-200 transition ease-in-out">
+                    Sign in
+                  </a>
+                </Link>
+                <Link href="/auth/signUp">
+                  <a className=" transition ease-in-out ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium hover:text-gray-200 bg-indigo-600 hover:bg-indigo-700">
+                    Sign up
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -277,7 +227,7 @@ export default function Navbar() {
           className="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden  "
         >
           {({ close }) => (
-            <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
+            <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-violet-100  divide-y-2 divide-gray-50">
               <div className="pt-5 pb-6 px-5">
                 <div className="flex items-center justify-between">
                   <div>
@@ -332,27 +282,58 @@ export default function Navbar() {
                     </button>
                   ))}
                 </div>
-                <div>
+                <div className="mt-1 mb-1 py-2">
                   <button
                     onClick={() => {
-                      router.push("/auth/signUp"), close();
+                      router.push(`/contact`), close();
                     }}
-                    className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                    className="text-md font-semibold text-gray-600 tracking-wide "
                   >
-                    Sign up
+                    Contact
                   </button>
-                  <p className="mt-6 text-center text-base font-medium text-gray-500">
-                    Existing customer?{" "}
+                </div>
+                {user ? (
+                  <div className="mt-2 space-y-5">
                     <button
                       onClick={() => {
-                        router.push("/auth/signIn"), close();
+                        router.push(`/dashboard`), close();
                       }}
-                      className="text-indigo-600 hover:text-indigo-500"
+                      className="text-md font-semibold text-gray-600 tracking-wide "
                     >
-                      Sign in
+                      Dashboard
                     </button>
-                  </p>
-                </div>
+                    <button
+                      onClick={() => {
+                        Auth.signOut, router.push("/"), close();
+                      }}
+                      className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                    >
+                      Signout
+                    </button>
+                  </div>
+                ) : (
+                  <div>
+                    <button
+                      onClick={() => {
+                        router.push("/auth/signUp"), close();
+                      }}
+                      className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                    >
+                      Sign up
+                    </button>
+                    <p className="mt-6 text-center text-base font-medium text-gray-500">
+                      Existing customer?{" "}
+                      <button
+                        onClick={() => {
+                          router.push("/auth/signIn"), close();
+                        }}
+                        className="text-indigo-600 hover:text-indigo-500"
+                      >
+                        Sign in
+                      </button>
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           )}

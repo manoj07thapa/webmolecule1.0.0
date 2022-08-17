@@ -17,13 +17,14 @@ function Login() {
   const onSubmit = async (values, actions) => {
     const { username, password } = values;
     try {
-      await Auth.signIn({
+      const user = await Auth.signIn({
         username,
         password,
       });
+      console.log(user);
+      localStorage.setItem("user", user);
       router.push("/");
     } catch (error) {
-      console.log(error);
       if (error) {
         actions.setErrors(error.message); //toDO: backend validation
       }
@@ -41,8 +42,8 @@ function Login() {
           <div className="-mt-4 h-10 w-4 bg-indigo-500 mix-blend-multiply sm:w-16 md:w-32 lg:w-48"></div>
         </div>
         <div className="w-full max-w-md lg:max-w-lg mt-16 ">
-          <div className=" mt-10 rounded-sm bg-white px-12 py-8 shadow-lg">
-            <h3 className="text-xl font-extrabold tracking-wide text-gray-600">
+          <div className=" mt-10 rounded-md bg-violet-100 px-12 py-8 shadow-lg">
+            <h3 className="text-xl font-extrabold tracking-wide text-gray-600 text-center underline">
               Sign in to your account
             </h3>
             <div className="mt-10">
