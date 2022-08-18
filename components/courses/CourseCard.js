@@ -8,7 +8,7 @@ export default function ProductCard({ courses }) {
         {courses.map((course) => (
           <Link key={course.id} href="#">
             <a className="border-2 border-white rounded-md shadow-md relative mb-20">
-              {/* <Image
+              <Image
                 src={course.s3Images[0]}
                 height={30}
                 width={35}
@@ -17,7 +17,7 @@ export default function ProductCard({ courses }) {
                 layout="responsive"
                 objectPosition="center center"
                 className="rounded-md shadow-md text-red-500"
-              /> */}
+              />
               <p className="">{course.title}</p>
               <p>{course.subtitle}</p>
               <p>{course.price}</p>

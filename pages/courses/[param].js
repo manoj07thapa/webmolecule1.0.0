@@ -1,72 +1,77 @@
 import Head from "next/head";
 import { Fragment, useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
-import { withSSRContext, Storage } from "aws-amplify";
+import { Storage, API } from "aws-amplify";
 import CourseSidebar from "../../components/courses/CourseSidebar";
 import { listCourses } from "../../src/graphql/queries";
 import CourseCard from "../../components/courses/CourseCard";
 
-export const getServerSideProps = async (ctx) => {
-  const param = ctx.query.param;
-  const req = ctx.req;
-  const SSR = withSSRContext({ req });
+// export const getServerSideProps = async (ctx) => {
+//   const param = ctx.query.param;
+//   const req = ctx.req;
+//   const SSR = withSSRContext({ req });
 
-  if (param === "all") {
-    const response = await SSR.API.graphql({
-      query: listCourses,
-      authMode: "AWS_IAM",
-    });
+//   if (param === "all") {
+//     const response = await SSR.API.graphql({
+//       query: listCourses,
+//       authMode: "AWS_IAM",
+//     });
 
-    return {
-      props: {
-        ssrCourses: response.data.listCourses.items,
-      },
-    };
-  }
+//     return {
+//       props: {
+//         ssrCourses: response.data.listCourses.items,
+//       },
+//     };
+//   }
 
-  const response = await SSR.API.graphql({
-    query: listCourses,
-    variables: { filter: { category: { eq: param } } },
-    authMode: "AWS_IAM",
-  });
+//   const response = await SSR.API.graphql({
+//     query: listCourses,
+//     variables: { filter: { category: { eq: param } } },
+//     authMode: "AWS_IAM",
+//   });
 
-  return {
-    props: {
-      ssrCourses: response.data.listCourses.items,
-    },
-  };
-};
+//   return {
+//     props: {
+//       ssrCourses: response.data.listCourses.items,
+//     },
+//   };
+// };
 
-const Course = ({ ssrCourses }) => {
+const Course = ({}) => {
   const { query } = useRouter();
-  // const [courses, setCourses] = useState();
-  // console.log("COURSES", courses);
+  const [courses, setCourses] = useState();
+  console.log("COURSES", courses);
 
-  // const fetchCourses = useCallback(async () => {
-  //   try {
-  //     const courses = await Promise.all(
-  //       ssrCourses.map(async (course) => {
-  //         const images = await Promise.all(
-  //           course.files.map(async (image) => {
-  //             const img = await Storage.get(image);
+  const fetchCourses = useCallback(async () => {
+    try {
+      const response = await API.graphql({
+        query: listCourses,
+        variables: { filter: { category: { eq: query.param } } },
+        authMode: "AWS_IAM",
+      });
+      const courses = await Promise.all(
+        response.data.listCourses.items.map(async (course) => {
+          const images = await Promise.all(
+            course.files.map(async (image) => {
+              const img = await Storage.get(image);
 
-  //             return img;
-  //           })
-  //         );
+              return img;
+            })
+          );
 
-  //         course.s3Images = images;
-  //         return course;
-  //       })
-  //     );
-  //     setCourses(courses);
-  //   } catch (error) {
-  //     console.log("error", error);
-  //   }
-  // }, [ssrCourses]);
+          course.s3Images = images;
+          return course;
+        })
+      );
+      setCourses(courses);
+    } catch (error) {
+      console.log("error", error);
+    }
+  }, [query.param]);
 
-  // useEffect(() => {
-  //   fetchCourses();
-  // }, [query, , fetchCourses]);
+  useEffect(() => {
+    fetchCourses();
+  }, [query, , fetchCourses]);
 
   return (
     <Fragment>
@@ -83,7 +88,7 @@ const Course = ({ ssrCourses }) => {
           <main className="sm:col-span-2 md:col-span-6">
             {/* <div>Query:{query.param} </div> */}
             {/* <pre>{JSON.stringify(ssrCourses, null, 4)}</pre> */}
-            {ssrCourses ? <CourseCard courses={ssrCourses} /> : "LOADING..."}
+            {courses ? <CourseCard courses={courses} /> : "LOADING..."}
           </main>
         </div>
         <div>rest of the content</div>
