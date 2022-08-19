@@ -1,27 +1,53 @@
 import Head from "next/head";
 import { Fragment, useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
-import { Storage, API } from "aws-amplify";
+import { Storage, API, withSSRContext } from "aws-amplify";
 import CourseSidebar from "../../components/courses/CourseSidebar";
 import { listCourses } from "../../src/graphql/queries";
 import CourseCard from "../../components/courses/CourseCard";
 
-const Course = () => {
+export const getServerSideProps = async (ctx) => {
+  const param = ctx.query.param;
+  const req = ctx.req;
+  const SSR = withSSRContext({ req });
+
+  const filter = {
+    category: { eq: param },
+  };
+
+  if (param === "all") {
+    const response = await SSR.API.graphql({
+      query: listCourses,
+    });
+
+    return {
+      props: {
+        ssrCourses: response.data.listCourses.items,
+      },
+    };
+  }
+
+  const response = await SSR.API.graphql({
+    query: listCourses,
+    variables: { filter },
+  });
+
+  return {
+    props: {
+      ssrCourses: response.data.listCourses.items,
+    },
+  };
+};
+
+const Course = ({ ssrCourses }) => {
   const { query } = useRouter();
   const [courses, setCourses] = useState();
   console.log("COURSES", courses);
 
   const fetchCourses = useCallback(async () => {
-    const filter = {
-      category: { eq: query.param },
-    };
     try {
-      const response = await API.graphql({
-        query: listCourses,
-        variables: { filter },
-      });
       const courses = await Promise.all(
-        response.data.listCourses.items.map(async (course) => {
+        ssrCourses.map(async (course) => {
           const images = await Promise.all(
             course.files.map(async (image) => {
               const img = await Storage.get(image);
@@ -38,7 +64,7 @@ const Course = () => {
     } catch (error) {
       console.log("error", error);
     }
-  }, [query.param]);
+  }, [ssrCourses]);
 
   useEffect(() => {
     fetchCourses();
