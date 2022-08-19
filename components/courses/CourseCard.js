@@ -6,7 +6,10 @@ export default function ProductCard({ courses }) {
     <Fragment>
       <div className="grid gridcols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
         {courses.map((course) => (
-          <Link key={course.id} href="#">
+          <Link
+            key={course.id}
+            href={`/course/${course.category}/${course.framework}/${course.id}`}
+          >
             <a className="border-2 border-white rounded-md shadow-md relative mb-20">
               <Image
                 src={course.s3Images[0]}

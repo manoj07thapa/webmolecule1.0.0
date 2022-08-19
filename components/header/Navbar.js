@@ -185,6 +185,7 @@ export default function Navbar({}) {
                 </>
               )}
             </Popover>
+
             <Link href="/contact">
               <a className="text-base font-medium  hover:text-gray-200 transition ease-in-out">
                 Contact

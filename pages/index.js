@@ -1,7 +1,10 @@
 import Head from "next/head";
-import { Auth } from "aws-amplify";
+import { Auth, withSSRContext } from "aws-amplify";
+import { listCourses } from "../src/graphql/queries";
 
-export default function Home() {
+export default function Home({ ssgCourses }) {
+  console.log("SSGDATA", ssgCourses);
+
   return (
     <div>
       <Head>
@@ -20,3 +23,17 @@ export default function Home() {
     </div>
   );
 }
+
+export const getStaticProps = async (context) => {
+  const SSR = withSSRContext();
+  const { data } = await SSR.API.graphql({
+    query: listCourses,
+    authMode: "AWS_IAM",
+  });
+
+  return {
+    props: {
+      ssgCourses: data.listCourses.items,
+    },
+  };
+};

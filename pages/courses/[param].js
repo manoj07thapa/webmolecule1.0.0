@@ -42,7 +42,6 @@ export const getServerSideProps = async (ctx) => {
 const Course = ({ ssrCourses }) => {
   const { query } = useRouter();
   const [courses, setCourses] = useState();
-  console.log("COURSES", courses);
 
   const fetchCourses = useCallback(async () => {
     try {

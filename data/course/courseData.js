@@ -7,20 +7,20 @@ export const categories = [
 ];
 
 export const frontendFrameworks = [
-  "React.js",
-  "Next.js",
-  "Vue.js",
-  "Sevelt.js",
-  "Gatsby.js",
-  "Remix.js",
-  "Angular.js",
+  "react.js",
+  "next.js",
+  "vue.js",
+  "sevelt.js",
+  "gatsby.js",
+  "remix.js",
+  "angular.js",
 ];
 
 export const backendFrameworks = [
-  "Node/Express",
-  "Firebase",
-  "Serveless",
-  "AwsAmplify",
+  "node-express",
+  "firebase",
+  "serveless",
+  "awsAmplify",
 ];
 
 export const languages = [
@@ -33,9 +33,9 @@ export const languages = [
   "php",
 ];
 
-export const database = ["Mongodb", "Dynamodb", "Postgres", "Sql", "Firestore"];
+export const database = ["mongodb", "dynamodb", "postgres", "sql", "firestore"];
 
 export const webDesign = ["css", "tailwind"];
-export const fullStack = ["MERNStack"];
+export const fullStack = ["mernStack"];
 
 export const level = ["Beginners", "Mid-level", "Advance"];
