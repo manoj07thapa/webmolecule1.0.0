@@ -17,6 +17,7 @@ export default function ProductCard({ courses }) {
                 layout="responsive"
                 objectPosition="center center"
                 className="rounded-md shadow-md text-red-500"
+                priority
               />
               <p className="">{course.title}</p>
               <p>{course.subtitle}</p>

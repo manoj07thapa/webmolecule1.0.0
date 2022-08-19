@@ -6,7 +6,6 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          {/* PWA primary color */}
           <meta name="theme-color" />
         </Head>
         <body className="bg-slate-900 font-roboto text-white antialiased">

@@ -1,6 +1,6 @@
 export type AmplifyDependentResourcesAttributes = {
     "auth": {
-        "webmolecule100e64940bd": {
+        "webmolecule1005db64289": {
             "IdentityPoolId": "string",
             "IdentityPoolName": "string",
             "UserPoolId": "string",
@@ -8,9 +8,6 @@ export type AmplifyDependentResourcesAttributes = {
             "UserPoolName": "string",
             "AppClientIDWeb": "string",
             "AppClientID": "string"
-        },
-        "userPoolGroups": {
-            "AdminGroupRole": "string"
         }
     },
     "api": {
@@ -20,7 +17,7 @@ export type AmplifyDependentResourcesAttributes = {
         }
     },
     "storage": {
-        "webmolecule100": {
+        "webmolecule": {
             "BucketName": "string",
             "Region": "string"
         }

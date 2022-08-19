@@ -44,6 +44,7 @@ export default function CreateCourse() {
         variables: { input: values },
         authMode: "AMAZON_COGNITO_USER_POOLS",
       });
+      console.log("RESPONSECOURSECREATION", res);
       // if (res.data.createCourse) {
       //   actions.resetForm();
       // }

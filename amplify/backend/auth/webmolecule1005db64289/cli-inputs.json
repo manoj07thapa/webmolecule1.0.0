@@ -1,10 +1,10 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "webmolecule100e64940bd_identitypool_e64940bd",
+    "identityPoolName": "webmolecule1005db64289_identitypool_5db64289",
     "allowUnauthenticatedIdentities": true,
-    "resourceNameTruncated": "webmole64940bd",
-    "userPoolName": "webmolecule100e64940bd_userpool_e64940bd",
+    "resourceNameTruncated": "webmol5db64289",
+    "userPoolName": "webmolecule1005db64289_userpool_5db64289",
     "autoVerifiedAttributes": [
       "email"
     ],
@@ -31,15 +31,13 @@
     "userpoolClientReadAttributes": [
       "email"
     ],
-    "userpoolClientLambdaRole": "webmole64940bd_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "webmol5db64289_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "e64940bd",
-    "resourceName": "webmolecule100e64940bd",
+    "sharedId": "5db64289",
+    "resourceName": "webmolecule1005db64289",
     "authSelections": "identityPoolAndUserPool",
-    "useDefault": "manual",
-    "userPoolGroupList": [
-      "Admin"
-    ],
+    "useDefault": "default",
+    "userPoolGroupList": [],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
     "useEnabledMfas": true,
@@ -56,16 +54,6 @@
       ]
     },
     "breakCircularDependency": true,
-    "dependsOn": [],
-    "thirdPartyAuth": false,
-    "userPoolGroups": false,
-    "adminQueries": false,
-    "triggers": {},
-    "hostedUI": false,
-    "authProviders": [],
-    "parentStack": {
-      "Ref": "AWS::StackId"
-    },
-    "permissions": []
+    "dependsOn": []
   }
 }
