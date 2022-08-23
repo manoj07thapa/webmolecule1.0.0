@@ -1,10 +1,24 @@
 import Head from "next/head";
 import { Auth, withSSRContext } from "aws-amplify";
-import { listCourses } from "../src/graphql/queries";
+import { listResources } from "../src/graphql/queries";
+import HeroSection from "../components/home/HeroSection";
+import TeamSection from "../components/home/TeamSection";
+import ReactSection from "../components/home/ReactSection";
+import { Zoom, Slide } from "react-reveal";
 
-export default function Home({ ssgCourses }) {
-  console.log("SSGDATA", ssgCourses);
+export default function Home({ resources }) {
+  console.log("SSGDATA", resources);
+  var heroResources = resources.filter(function (item) {
+    return item.section === "hero";
+  });
+  var teamResources = resources.filter(function (item) {
+    return item.section === "team";
+  });
+  var sectionSecond = resources.filter(function (item) {
+    return item.section === "second";
+  });
 
+  console.log("HERORESOURCES", heroResources);
   return (
     <div>
       <Head>
@@ -13,12 +27,26 @@ export default function Home({ ssgCourses }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="min-h-screen w-full bg-[url('/graph-paper.svg')] bg-cover ">
-        <div className="max-w-7xl mx-auto px-6">
-          <h1>Web molecule</h1>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-32 md:space-y-48 h-full">
+          <section className="">
+            <HeroSection heroResources={heroResources} />
+          </section>
+
+          <section>
+            <Slide left>
+              <ReactSection sectionSecond={sectionSecond} />
+            </Slide>
+          </section>
+          <section>
+            <Slide right>
+              <TeamSection teamResources={teamResources} />
+            </Slide>
+          </section>
+          <section></section>
         </div>
-        <button type="submit" onClick={() => Auth.signOut()}>
+        {/* <button type="submit" onClick={() => Auth.signOut()}>
           Signout
-        </button>
+        </button> */}
       </div>
     </div>
   );
@@ -27,13 +55,13 @@ export default function Home({ ssgCourses }) {
 export const getStaticProps = async (context) => {
   const SSR = withSSRContext();
   const { data } = await SSR.API.graphql({
-    query: listCourses,
+    query: listResources,
     authMode: "AWS_IAM",
   });
 
   return {
     props: {
-      ssgCourses: data.listCourses.items,
+      resources: data.listResources.items,
     },
   };
 };

@@ -11,7 +11,7 @@ const SidebarLayout = ({ children }) => {
     <Fragment>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 mt-7 md:mt-12 ">
         <div className="md:container md:relative flex flex-col md:flex-row md:space-x-32 ">
-          <aside className="md:sticky md:top-0 md:h-screen md:w-3/12 justify-center  pb-4 md:pb-0 md:overflow-auto hidden md:block ">
+          <aside className=" md:sticky md:top-0 md:h-screen md:w-3/12 justify-center  pb-4 md:pb-0 md:overflow-auto hidden md:block ">
             <ul className="space-y-20 ">
               <div className="w-full">
                 <div className="space-y-5">

@@ -1,6 +1,7 @@
 import { courses } from "../../data/header/navData";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { DotsHorizontalIcon } from "@heroicons/react/solid";
 
 const CourseSidebar = ({}) => {
   const { query } = useRouter();
@@ -16,7 +17,7 @@ const CourseSidebar = ({}) => {
                     query.param === course.href
                       ? "sm:border-l-2 border-b-2 sm:border-b-0 border-pink-500 px-2.5 text-white"
                       : ""
-                  }  px-3 py-2 text-sm lg:text-base transition ease-in-out hover:bg-indigo-600 text-gray-400 hover:text-white hover:shadow hover:rounded-md`}
+                  } px-3 py-2 text-sm lg:text-base font-medium transition ease-in-out hover:bg-indigo-600 text-gray-400 hover:text-white hover:shadow hover:rounded-md`}
                 >
                   {course.name}
                 </a>
