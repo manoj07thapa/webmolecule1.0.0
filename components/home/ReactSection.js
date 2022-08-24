@@ -32,14 +32,6 @@ const ReactSection = ({ sectionSecond }) => {
               </p>
               <p className="text-sm text-gray-500">{item.subtitle1}</p>
             </div>
-            <div className="absolute z-0 bg-gradient-to-r from-slate-600 to-slate-800 -bottom-48 -left-16 w-[100%] h-[50%] blur-3xl rounded-full -skew-y-12 "></div>
-
-            {/* <p className="text-medium text-gray-300 pt-2">
-          React is a industry standard and long way forward from any other
-          existing frontend frameworks. Learning react not only enhances your
-          frontend abilities but also you will have an edge over other developer
-          and maximizes your chances of getting a job.
-        </p> */}
           </div>
           <div className="w-full">
             <Image
@@ -51,7 +43,8 @@ const ReactSection = ({ sectionSecond }) => {
               className="shadow-md rounded-md  "
               priority
               objectFit="cover"
-            />{" "}
+            />
+            {/* <div className="absolute z-0 bg-gradient-to-r from-pink-800 to-pink-900 -bottom-48 -left-16 w-[100%] h-[50%] blur-3xl rounded-full -skew-y-12 "></div> */}
           </div>
         </div>
       ))}

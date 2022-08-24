@@ -5,6 +5,7 @@ import { Storage, API, withSSRContext } from "aws-amplify";
 import CourseSidebar from "../../components/courses/CourseSidebar";
 import { listCourses } from "../../src/graphql/queries";
 import CourseCard from "../../components/courses/CourseCard";
+import Footer from "../../components/footer/Footer";
 
 export const getServerSideProps = async (ctx) => {
   const param = ctx.query.param;
@@ -85,8 +86,9 @@ const Course = ({ ssrCourses }) => {
             {courses ? <CourseCard courses={courses} /> : "LOADING..."}
           </main>
         </div>
-        <div>rest of the content</div>
+        {/* <div>rest of the content</div> */}
       </div>
+      <Footer />
     </Fragment>
   );
 };

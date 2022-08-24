@@ -10,6 +10,7 @@ import CourseContent from "../../../../components/courses/CourseContent";
 import StickyCourse from "../../../../components/courses/StickyCourse";
 import Zoom from "react-reveal/Zoom";
 import Slide from "react-reveal/Slide";
+import Footer from "../../../../components/footer/Footer";
 
 export async function getStaticPaths() {
   const SSR = withSSRContext();
@@ -218,6 +219,7 @@ const Course = ({ ssgCourse }) => {
         </div>
         <StickyCourse course={ssgCourse} image={courseImage} />
       </div>
+      <Footer />
     </Fragment>
   );
 };

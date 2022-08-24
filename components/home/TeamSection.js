@@ -6,47 +6,72 @@ import Member3 from "../../public/member3.jpg";
 
 const TeamSection = ({ teamResources }) => {
   return (
-    <div>
+    <div className=" py-12">
       {teamResources.map((item) => (
         <div key={item.id}>
-          <BookOpenIcon className="h-24 w-24 text-pink-600 text-left" />
-          <h1 className="text-2xl sm:text-4xl  font-extrabold pl-2">
-            {item.title}
-          </h1>
-          <p className="text-medium font-medium text-gray-400  sm:text-left pt-1 pl-2">
-            {item.subtitle}
-          </p>
-          <div className="mt-2 ml-2 flex ">
-            <Image
-              height={50}
-              width={50}
-              src={Member1}
-              alt="team member 1"
-              objectPosition="center center"
-              className="shadow-md rounded-full "
-              priority
-              objectFit="cover"
-            />
-            <Image
-              height={50}
-              width={50}
-              src={Member2}
-              alt="team member 2"
-              objectPosition="center center"
-              className="shadow-md rounded-full "
-              priority
-              objectFit="cover"
-            />
-            <Image
-              height={50}
-              width={50}
-              src={Member3}
-              alt="team member3"
-              objectPosition="center center"
-              className="shadow-md rounded-full  "
-              priority
-              objectFit="cover"
-            />
+          <div className="text-left sm:text-center sm:px-40 py-12">
+            <h1 className="text-2xl sm:text-4xl  font-extrabold pl-2">
+              {item.title}
+            </h1>
+            <p className="text-lg font-medium text-gray-300   pt-2 pl-2 sm:text-center leading-7 mt-2">
+              {item.subtitle}
+            </p>
+            <div className="mt-12 ml-2  space-x-5 grid place-content-center grid-cols-3">
+              <div className="">
+                <Image
+                  height={100}
+                  width={100}
+                  src={Member1}
+                  alt="team member 1"
+                  objectPosition="center center"
+                  className="shadow-md rounded-full "
+                  priority
+                  objectFit="cover"
+                />
+                <p className="flex flex-col">
+                  <span className="text-sm font-semibold leading-5 text-indigo-700">
+                    Racheal green
+                  </span>
+                  <span className="text-gray-300">Sr.Frontend Developer</span>
+                </p>
+              </div>
+              <div>
+                <Image
+                  height={100}
+                  width={100}
+                  src={Member2}
+                  alt="team member 2"
+                  objectPosition="center center"
+                  className="shadow-md rounded-full "
+                  priority
+                  objectFit="cover"
+                />
+                <p className="flex flex-col">
+                  <span className="text-sm font-semibold leading-5 text-indigo-700">
+                    Joey Tribiyani
+                  </span>
+                  <span className="text-gray-300">Sr.Cloud Engineer</span>
+                </p>
+              </div>
+              <div>
+                <Image
+                  height={100}
+                  width={100}
+                  src={Member3}
+                  alt="team member3"
+                  objectPosition="center center"
+                  className="shadow-md rounded-full  "
+                  priority
+                  objectFit="cover"
+                />
+                <p className="flex flex-col">
+                  <span className="text-sm font-semibold leading-5 text-indigo-700">
+                    Mark Anthony
+                  </span>
+                  <span className="text-gray-300">Sr.Backend Developer</span>
+                </p>
+              </div>
+            </div>{" "}
           </div>
         </div>
       ))}

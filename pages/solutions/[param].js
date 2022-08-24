@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import { Fragment } from "react";
 import SolutionSidebar from "../../components/solutions/SolutionSidebar";
+import Footer from "../../components/footer/Footer";
+
 export default function Solution() {
   const { query } = useRouter();
   return (
@@ -54,8 +56,9 @@ export default function Solution() {
             the 1914 translation by H. Rackham.
           </main>
         </div>
-        <div>rest of the content</div>
+        {/* <div>rest of the content</div> */}
       </div>
+      <Footer />
     </Fragment>
   );
 }

@@ -1,10 +1,14 @@
 import Head from "next/head";
-import { Auth, withSSRContext } from "aws-amplify";
+import { withSSRContext } from "aws-amplify";
 import { listResources } from "../src/graphql/queries";
+import { Reveal } from "react-reveal";
 import HeroSection from "../components/home/HeroSection";
 import TeamSection from "../components/home/TeamSection";
 import ReactSection from "../components/home/ReactSection";
-import { Zoom, Slide } from "react-reveal";
+import FrontEndSection from "../components/home/FrontEndSection";
+import BuildSection from "../components/home/BuildSection";
+import BackendSection from "../components/home/BackendSection";
+import Footer from "../components/footer/Footer";
 
 export default function Home({ resources }) {
   console.log("SSGDATA", resources);
@@ -16,6 +20,12 @@ export default function Home({ resources }) {
   });
   var sectionSecond = resources.filter(function (item) {
     return item.section === "second";
+  });
+  var frontendResources = resources.filter(function (item) {
+    return item.section === "frontend";
+  });
+  var beckendResources = resources.filter(function (item) {
+    return item.section === "backend";
   });
 
   console.log("HERORESOURCES", heroResources);
@@ -33,17 +43,35 @@ export default function Home({ resources }) {
           </section>
 
           <section>
-            <Slide left>
+            <Reveal effect="fadeInUp">
               <ReactSection sectionSecond={sectionSecond} />
-            </Slide>
+            </Reveal>
+          </section>
+
+          <section>
+            <Reveal effect="fadeInUp">
+              <FrontEndSection frontendResources={frontendResources} />
+            </Reveal>
           </section>
           <section>
-            <Slide right>
-              <TeamSection teamResources={teamResources} />
-            </Slide>
+            <Reveal effect="fadeInUp">
+              <BuildSection frontendResources={frontendResources} />
+            </Reveal>
           </section>
-          <section></section>
+          <section>
+            <Reveal effect="fadeInUp">
+              <BackendSection beckendResources={beckendResources} />
+            </Reveal>
+          </section>
+          <section>
+            <Reveal effect="fadeInUp">
+              <TeamSection teamResources={teamResources} />
+            </Reveal>
+          </section>
         </div>
+        <section>
+          <Footer />
+        </section>
         {/* <button type="submit" onClick={() => Auth.signOut()}>
           Signout
         </button> */}
