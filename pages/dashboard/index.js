@@ -1,8 +1,27 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { Auth, withSSRContext } from "aws-amplify";
 import SidebarLayout from "../../components/dashboard/SidebarLayout";
 
 const Dashboard = () => {
+  const router = useRouter();
+  // const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
+  useEffect(() => {
+    async function getUser() {
+      try {
+        await Auth.currentAuthenticatedUser();
+      } catch (error) {
+        console.log(error);
+        if (error) {
+          router.push("/auth/signIn");
+        }
+      }
+    }
+    getUser();
+    // if (isUserAuthenticated === false) router.push("/auth/signIn");
+  }, [router]);
+
   return (
     <Fragment>
       <Head>
@@ -172,3 +191,23 @@ const Dashboard = () => {
 
 Dashboard.PageLayout = SidebarLayout;
 export default Dashboard;
+
+// export async function getServerSideProps({ req }) {
+//   const SSR = withSSRContext({ req });
+//   console.log("SSR", SSR);
+//   const user = await SSR.Auth.currentAuthenticatedUser();
+//   console.log("USER", user);
+
+//   if (!user) {
+//     return {
+//       redirect: {
+//         destination: "/auth/signIn",
+//         permanent: false,
+//       },
+//     };
+//   }
+
+//   return {
+//     props: {},
+//   };
+// }

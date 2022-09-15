@@ -1,14 +1,15 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useEffect, useContext } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
-import { Auth } from "aws-amplify";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { courses, solutions } from "../../data/header/navData";
 import UserMenu from "./UserMenu";
-import { Hub } from "aws-amplify";
+import { Auth } from "aws-amplify";
+import { UserContext } from "../../hooks/user/UserContext";
+import MyLink from "./MyLink";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -17,20 +18,15 @@ function classNames(...classes) {
 export default function Navbar({}) {
   const router = useRouter();
 
-  const [user, setUser] = useState(null);
+  const { user, setUser } = useContext(UserContext);
 
-  Hub.listen("auth", (data) => {
-    console.log(data.payload.data);
-    switch (data.payload.event) {
-      case "signIn":
-        console.log("user signed in");
-        setUser(data.payload.data);
-        break;
-      case "signOut":
-        console.log("user signed out");
-        setUser(null);
+  useEffect(() => {
+    async function authListner() {
+      const user = await Auth.currentAuthenticatedUser();
+      setUser(user);
     }
-  });
+    authListner();
+  }, [setUser]);
 
   return (
     <Popover className="relative bg-slate-900">
@@ -87,26 +83,25 @@ export default function Navbar({}) {
                                 key={item.name}
                                 className="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-100"
                               >
-                                <button
-                                  className="flex items-start"
-                                  onClick={() => {
-                                    router.push(`/solutions/${item.href}`),
-                                      close();
-                                  }}
+                                <Popover.Button
+                                  as={MyLink}
+                                  href={`/solutions/${item.href}`}
                                 >
-                                  <item.icon
-                                    className="flex-shrink-0 h-6 w-6 text-indigo-600"
-                                    aria-hidden="true"
-                                  />
-                                  <div className="ml-4 flex items-start flex-col">
-                                    <p className="text-base font-medium text-gray-900">
-                                      {item.name}
-                                    </p>
-                                    <p className="mt-1 text-sm text-gray-500">
-                                      {item.description}
-                                    </p>
+                                  <div className="flex">
+                                    <item.icon
+                                      className="flex-shrink-0 h-6 w-6 text-indigo-600"
+                                      aria-hidden="true"
+                                    />
+                                    <div className="ml-4 flex items-start flex-col">
+                                      <p className="text-base font-medium text-gray-900">
+                                        {item.name}
+                                      </p>
+                                      <p className="mt-1 text-sm text-gray-500">
+                                        {item.description}
+                                      </p>
+                                    </div>
                                   </div>
-                                </button>
+                                </Popover.Button>
                               </div>
                             ))}
                           </div>
@@ -155,26 +150,25 @@ export default function Navbar({}) {
                                 key={item.name}
                                 className="-m-3 p-3  rounded-lg hover:bg-gray-100"
                               >
-                                <button
-                                  className="flex "
-                                  onClick={() => {
-                                    router.push(`/courses/${item.href}`),
-                                      close();
-                                  }}
+                                <Popover.Button
+                                  as={MyLink}
+                                  href={`/courses/${item.href}`}
                                 >
-                                  <item.icon
-                                    className="flex-shrink-0 h-6 w-6 text-indigo-600"
-                                    aria-hidden="true"
-                                  />
-                                  <div className="ml-4 flex flex-col items-start">
-                                    <p className="text-base font-medium text-gray-900">
-                                      {item.name}
-                                    </p>
-                                    <p className="mt-1 text-sm text-gray-500">
-                                      {item.description}
-                                    </p>
-                                  </div>
-                                </button>
+                                  <div className="flex">
+                                    <item.icon
+                                      className="flex-shrink-0 h-6 w-6 text-indigo-600"
+                                      aria-hidden="true"
+                                    />
+                                    <div className="ml-4 flex flex-col items-start">
+                                      <p className="text-base font-medium text-gray-900">
+                                        {item.name}
+                                      </p>
+                                      <p className="mt-1 text-sm text-gray-500">
+                                        {item.description}
+                                      </p>
+                                    </div>
+                                  </div>{" "}
+                                </Popover.Button>
                               </div>
                             ))}
                           </div>
@@ -194,9 +188,9 @@ export default function Navbar({}) {
           </Popover.Group>
 
           <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-            {user && <UserMenu />}
-
-            {!user && (
+            {user ? (
+              <UserMenu setUser={setUser} />
+            ) : (
               <div>
                 <Link href="/auth/signIn">
                   <a className="whitespace-nowrap text-base font-medium hover:text-gray-200 transition ease-in-out">
@@ -210,6 +204,21 @@ export default function Navbar({}) {
                 </Link>
               </div>
             )}
+            {/* 
+            {user === null && (
+              <div>
+                <Link href="/auth/signIn">
+                  <a className="whitespace-nowrap text-base font-medium hover:text-gray-200 transition ease-in-out">
+                    Sign in
+                  </a>
+                </Link>
+                <Link href="/auth/signUp">
+                  <a className=" transition ease-in-out ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium hover:text-gray-200 bg-indigo-600 hover:bg-indigo-700">
+                    Sign up
+                  </a>
+                </Link>
+              </div>
+            )} */}
           </div>
         </div>
       </div>
@@ -306,7 +315,10 @@ export default function Navbar({}) {
                     </button>
                     <button
                       onClick={() => {
-                        Auth.signOut, router.push("/"), close();
+                        Auth.signOut(),
+                          setUser(null),
+                          router.push("/"),
+                          close();
                       }}
                       className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
                     >

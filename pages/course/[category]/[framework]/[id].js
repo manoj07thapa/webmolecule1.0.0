@@ -16,7 +16,7 @@ export async function getStaticPaths() {
   const SSR = withSSRContext();
   const { data } = await SSR.API.graphql({
     query: listCourses,
-    authMode: "AWS_IAM",
+    // authMode: "AWS_IAM",
   });
   const paths = data.listCourses.items.map((course) => ({
     params: {
@@ -38,12 +38,13 @@ export async function getStaticProps({ params }) {
     variables: {
       id: params.id,
     },
-    authMode: "AWS_IAM",
+    // authMode: "AWS_IAM",
   });
   return {
     props: {
       ssgCourse: data.getCourse,
     },
+    revalidate: 100,
   };
 }
 

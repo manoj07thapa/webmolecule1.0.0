@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { withSSRContext } from "aws-amplify";
+import { withSSRContext, Auth, API } from "aws-amplify";
 import { listResources } from "../src/graphql/queries";
 import { Reveal } from "react-reveal";
 import HeroSection from "../components/home/HeroSection";
@@ -11,7 +11,6 @@ import BackendSection from "../components/home/BackendSection";
 import Footer from "../components/footer/Footer";
 
 export default function Home({ resources }) {
-  console.log("SSGDATA", resources);
   var heroResources = resources.filter(function (item) {
     return item.section === "hero";
   });
@@ -28,7 +27,6 @@ export default function Home({ resources }) {
     return item.section === "backend";
   });
 
-  console.log("HERORESOURCES", heroResources);
   return (
     <div>
       <Head>
@@ -72,9 +70,6 @@ export default function Home({ resources }) {
         <section>
           <Footer />
         </section>
-        {/* <button type="submit" onClick={() => Auth.signOut()}>
-          Signout
-        </button> */}
       </div>
     </div>
   );
@@ -84,7 +79,7 @@ export const getStaticProps = async (context) => {
   const SSR = withSSRContext();
   const { data } = await SSR.API.graphql({
     query: listResources,
-    authMode: "AWS_IAM",
+    // authMode: "AWS_IAM",
   });
 
   return {

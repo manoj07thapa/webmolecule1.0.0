@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
+import { Formik, Form, Field, FieldArray } from "formik";
 import { Storage, API } from "aws-amplify";
 import ImageUploadComponent from "../../upload/ImageUploadComponent";
 import { categories, languages, level } from "../../../data/course/courseData";
@@ -8,6 +8,9 @@ import { createCourse } from "../../../src/graphql/mutations";
 import { MinusCircleIcon, PlusCircleIcon } from "@heroicons/react/solid";
 import ImagePreview from "../../upload/ImagePreview";
 import { courseSchema } from "../../../validation/course/course";
+// import toast from "../../../components/toast/Toast";
+import { toast } from "react-toastify";
+import RingSpinner from "../../loading/RingSpinner";
 
 export default function CreateCourse() {
   const initialValues = {
@@ -30,6 +33,7 @@ export default function CreateCourse() {
   };
 
   const handleSubmit = async (values, actions) => {
+    console.log(values);
     try {
       //uploading the image to s3 one at a time with the file name as the key
       const imageKeys = await Promise.all(
@@ -44,12 +48,20 @@ export default function CreateCourse() {
         variables: { input: values },
         authMode: "AMAZON_COGNITO_USER_POOLS",
       });
+      if (res.data.createCourse) {
+        toast.success("Course has been created");
+      }
       console.log("RESPONSECOURSECREATION", res);
       // if (res.data.createCourse) {
       //   actions.resetForm();
       // }
     } catch (error) {
       console.log("ERROR", error);
+      if (error.errors[0].errorType === "Unauthorized") {
+        toast.error("Access denied");
+      } else {
+        toast.error("Course couldnot be created");
+      }
     }
   };
 
@@ -560,7 +572,9 @@ export default function CreateCourse() {
                     isSubmitting ? "bg-gray-800" : ""
                   }  text-medium w-full rounded-md bg-pink-500 px-7 py-4 font-semibold uppercase  tracking-wider text-white hover:bg-pink-600 `}
                 >
-                  Submit
+                  <span className="text-center">
+                    {isSubmitting ? <RingSpinner /> : "Submit"}
+                  </span>
                 </button>
               </div>
             </Form>

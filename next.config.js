@@ -13,7 +13,7 @@ const nextConfig = {
       "images.unsplash.com",
       "lh3.googleusercontent.com",
       "s.gravatar.com",
-      "webmolecule100a175292d10ad4cb6b4799b41654358a9113224-dev.s3.ap-south-1.amazonaws.com",
+      "webmolecule100d4295d1dc1f84d8f835f0e4cffc49d2a132049-dev.s3.ap-south-1.amazonaws.com",
     ],
   },
 };

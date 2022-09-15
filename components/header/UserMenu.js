@@ -2,15 +2,13 @@ import { Menu, Transition } from "@headlessui/react";
 import { UserIcon, BellIcon } from "@heroicons/react/outline";
 import { Fragment } from "react";
 import { Auth } from "aws-amplify";
-import { useRouter } from "next/router";
 import MyLink from "./MyLink";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const UserMenu = () => {
-  const router = useRouter();
+const UserMenu = ({ setUser }) => {
   return (
     <div>
       <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -65,6 +63,7 @@ const UserMenu = () => {
                       )}
                       onClick={() => {
                         Auth.signOut();
+                        setUser(null);
                       }}
                     >
                       Signout

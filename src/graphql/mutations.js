@@ -30,7 +30,6 @@ export const createCourse = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -63,7 +62,6 @@ export const updateCourse = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -96,7 +94,6 @@ export const deleteCourse = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -117,7 +114,6 @@ export const createResource = /* GraphQL */ `
       files
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -138,7 +134,6 @@ export const updateResource = /* GraphQL */ `
       files
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -159,7 +154,6 @@ export const deleteResource = /* GraphQL */ `
       files
       createdAt
       updatedAt
-      owner
     }
   }
 `;

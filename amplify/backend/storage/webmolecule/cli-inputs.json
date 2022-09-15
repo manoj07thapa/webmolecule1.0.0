@@ -1,16 +1,19 @@
 {
   "resourceName": "webmolecule",
-  "policyUUID": "70d46b10",
-  "bucketName": "webmolecule100a175292d10ad4cb6b4799b41654358a9",
+  "policyUUID": "086c4e25",
+  "bucketName": "webmolecule100d4295d1dc1f84d8f835f0e4cffc49d2a",
   "storageAccess": "authAndGuest",
   "guestAccess": [
     "READ"
   ],
   "authAccess": [
-    "CREATE_AND_UPDATE",
-    "READ",
-    "DELETE"
+    "READ"
   ],
-  "triggerFunction": "NONE",
-  "groupAccess": {}
+  "groupAccess": {
+    "admin": [
+      "CREATE_AND_UPDATE",
+      "READ",
+      "DELETE"
+    ]
+  }
 }

@@ -126,8 +126,16 @@ const SidebarLayout = ({ children }) => {
                           leaveTo="transform scale-95 opacity-0"
                           className="mt-2 pl-2 md:pl-4 md:border-l md:border-gray-800 ml-4 space-y-4 text-sm md:text-gray-400 "
                         >
-                          <Disclosure.Panel className=" md:hover:text-gray-300 ">
-                            View courses
+                          <Disclosure.Panel
+                            className={`${
+                              router.pathname === "/dashboard/viewCourses"
+                                ? "md:text-indigo-400 font-bold"
+                                : ""
+                            } md:hover:text-gray-300`}
+                          >
+                            <Link href="/dashboard/viewCourses">
+                              <a>View courses</a>
+                            </Link>
                           </Disclosure.Panel>
                         </Transition>
                       </>
@@ -156,8 +164,16 @@ const SidebarLayout = ({ children }) => {
                           leaveTo="transform scale-95 opacity-0"
                           className="mt-2 pl-2 md:pl-4 md:border-l md:border-gray-800 ml-4 space-y-4 text-sm md:text-gray-400"
                         >
-                          <Disclosure.Panel className=" md:hover:text-gray-300 ">
-                            View users
+                          <Disclosure.Panel
+                            className={`${
+                              router.pathname === "/dashboard/viewUsers"
+                                ? "md:text-indigo-400 font-bold"
+                                : ""
+                            } md:hover:text-gray-300`}
+                          >
+                            <Link href="/dashboard/viewUsers">
+                              <a>View Users</a>
+                            </Link>
                           </Disclosure.Panel>
                         </Transition>
                       </>

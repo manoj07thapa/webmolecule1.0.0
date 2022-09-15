@@ -27,7 +27,6 @@ export const getCourse = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -62,7 +61,6 @@ export const listCourses = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
@@ -82,7 +80,6 @@ export const getResource = /* GraphQL */ `
       files
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -105,7 +102,6 @@ export const listResources = /* GraphQL */ `
         files
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }

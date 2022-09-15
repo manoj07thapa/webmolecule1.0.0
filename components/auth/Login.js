@@ -1,13 +1,15 @@
-import React, { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import { Formik, Field, Form } from "formik";
 import { Auth } from "aws-amplify";
 import Link from "next/link";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { loginSchema } from "../../validation/auth/loginSchema";
+import { UserContext } from "../../hooks/user/UserContext";
 
 function Login() {
   const router = useRouter();
+  const { setUser } = useContext(UserContext);
 
   const initialValues = {
     username: "",
@@ -21,8 +23,7 @@ function Login() {
         username,
         password,
       });
-      console.log(user);
-      localStorage.setItem("user", user);
+      setUser(user);
       router.push("/");
     } catch (error) {
       if (error) {

@@ -1,6 +1,22 @@
 {
   "auth": {
-    "webmolecule1005db64289": {
+    "userPoolGroups": {
+      "service": "Cognito-UserPool-Groups",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "webmolecule10048e3195b48e3195b",
+          "attributes": [
+            "UserPoolId",
+            "AppClientIDWeb",
+            "AppClientID",
+            "IdentityPoolId"
+          ]
+        }
+      ]
+    },
+    "webmolecule10048e3195b48e3195b": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -25,14 +41,52 @@
       }
     }
   },
+  "function": {
+    "AdminQueries6eb1b594": {
+      "service": "Lambda",
+      "providerPlugin": "awscloudformation",
+      "build": true,
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "webmolecule10048e3195b48e3195b",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ]
+    }
+  },
   "api": {
+    "AdminQueries": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "authorizationType": "AMAZON_COGNITO_USER_POOLS",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "webmolecule10048e3195b48e3195b",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "AdminQueries6eb1b594",
+          "attributes": [
+            "Arn",
+            "Name"
+          ]
+        }
+      ]
+    },
     "webmolecule100": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "dependsOn": [
         {
           "category": "auth",
-          "resourceName": "webmolecule1005db64289",
+          "resourceName": "webmolecule10048e3195b48e3195b",
           "attributes": [
             "UserPoolId"
           ]
@@ -41,14 +95,19 @@
       "output": {
         "authConfig": {
           "defaultAuthentication": {
-            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
-            "userPoolConfig": {
-              "userPoolId": "authwebmolecule1005db64289"
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 365,
+              "apiKeyExpirationDate": "2023-09-15T09:13:53.518Z",
+              "description": "public"
             }
           },
           "additionalAuthenticationProviders": [
             {
-              "authenticationType": "AWS_IAM"
+              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+              "userPoolConfig": {
+                "userPoolId": "authwebmolecule10048e3195b48e3195b"
+              }
             }
           ]
         }
@@ -59,14 +118,22 @@
     "webmolecule": {
       "service": "S3",
       "providerPlugin": "awscloudformation",
-      "dependsOn": []
-    }
-  },
-  "hosting": {
-    "amplifyhosting": {
-      "service": "amplifyhosting",
-      "type": "cicd",
-      "lastPushTimeStamp": "2022-08-19T06:49:34.975Z"
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "webmolecule10048e3195b48e3195b",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "userPoolGroups",
+          "attributes": [
+            "adminGroupRole"
+          ]
+        }
+      ]
     }
   }
 }

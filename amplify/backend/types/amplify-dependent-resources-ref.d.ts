@@ -1,6 +1,9 @@
 export type AmplifyDependentResourcesAttributes = {
     "auth": {
-        "webmolecule1005db64289": {
+        "userPoolGroups": {
+            "adminGroupRole": "string"
+        },
+        "webmolecule10048e3195b48e3195b": {
             "IdentityPoolId": "string",
             "IdentityPoolName": "string",
             "UserPoolId": "string",
@@ -10,8 +13,22 @@ export type AmplifyDependentResourcesAttributes = {
             "AppClientID": "string"
         }
     },
+    "function": {
+        "AdminQueries6eb1b594": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
+        }
+    },
     "api": {
+        "AdminQueries": {
+            "RootUrl": "string",
+            "ApiName": "string",
+            "ApiId": "string"
+        },
         "webmolecule100": {
+            "GraphQLAPIKeyOutput": "string",
             "GraphQLAPIIdOutput": "string",
             "GraphQLAPIEndpointOutput": "string"
         }

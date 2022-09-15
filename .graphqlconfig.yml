@@ -1,6 +1,6 @@
 projects:
   webmolecule100:
-    schemaPath: src/graphql/schema.json
+    schemaPath: graphql/schema.json
     includes:
       - src/graphql/**/*.js
     excludes:
