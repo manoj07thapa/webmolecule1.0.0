@@ -2,7 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import CreateCourse from "./CreateCourse";
 
-export default function CourseEditModal({ isOpen, closeModal, id }) {
+export default function CourseEditModal({ isOpen, closeModal, id, course }) {
   console.log("courseEDITMODAL", id);
   return (
     <>
@@ -44,7 +44,7 @@ export default function CourseEditModal({ isOpen, closeModal, id }) {
                       you an email with all of the details of your order.
                     </p>
                   </div>
-
+                  <p className="text-gray-700">{course.title}</p>
                   <div className="mt-4">
                     <button
                       type="button"

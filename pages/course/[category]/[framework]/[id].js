@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import Image from "next/image";
 import { Storage, withSSRContext } from "aws-amplify";
-import { GridLoader } from "react-spinners";
 import { StarIcon, CheckIcon } from "@heroicons/react/solid";
 import { listCourses, getCourse } from "../../../../src/graphql/queries";
 import CourseContent from "../../../../components/courses/CourseContent";
@@ -71,11 +70,7 @@ const Course = ({ ssgCourse }) => {
   }, [fetchCourse]);
 
   if (router.isFallback) {
-    return (
-      <div className="grid place-content-center">
-        <GridLoader />
-      </div>
-    );
+    return <div className="grid place-content-center">Loadig...</div>;
   }
   return (
     <Fragment>

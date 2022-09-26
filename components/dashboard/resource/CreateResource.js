@@ -5,6 +5,8 @@ import ImageUploadComponent from "../../upload/ImageUploadComponent";
 import { createResource } from "../../../src/graphql/mutations";
 import ImagePreview from "../../upload/ImagePreview";
 import { resourceSchema } from "../../../validation/resource/resource";
+import { toast } from "react-toastify";
+import RingSpinner from "../../loading/RingSpinner";
 
 export default function CreateCourse() {
   const initialValues = {
@@ -34,11 +36,20 @@ export default function CreateCourse() {
         variables: { input: values },
         authMode: "AMAZON_COGNITO_USER_POOLS",
       });
+      console.log("RESOURCE", res);
       if (res.data.createResource) {
+        toast.success("Course has been created");
         actions.resetForm();
       }
     } catch (error) {
       console.log("ERROR", error);
+      if (error.errors[0].errorType === "Unauthorized") {
+        toast.error("Access denied");
+        actions.resetForm();
+      } else {
+        toast.error("Course couldnot be created");
+        actions.resetForm();
+      }
     }
   };
 

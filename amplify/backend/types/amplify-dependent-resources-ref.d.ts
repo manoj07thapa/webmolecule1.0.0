@@ -1,6 +1,8 @@
 export type AmplifyDependentResourcesAttributes = {
     "auth": {
         "userPoolGroups": {
+            "studentGroupRole": "string",
+            "teacherGroupRole": "string",
             "adminGroupRole": "string"
         },
         "webmolecule10048e3195b48e3195b": {
@@ -19,6 +21,12 @@ export type AmplifyDependentResourcesAttributes = {
             "Arn": "string",
             "Region": "string",
             "LambdaExecutionRole": "string"
+        },
+        "webmolecule10048e3195b48e3195bPostConfirmation": {
+            "Name": "string",
+            "Arn": "string",
+            "LambdaExecutionRole": "string",
+            "Region": "string"
         }
     },
     "api": {

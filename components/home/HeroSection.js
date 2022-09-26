@@ -26,7 +26,7 @@ const HeroSection = ({ heroResources }) => {
             </p>
             <button
               type="submit"
-              className="bg-indigo-800 hover:bg-indigo-900 transition ease-in-out px-4 py-2 rounded-md shadow-md justify-center w-full sm:w-2/3 md:w-1/3 mt-6 text-medium font-semibold tracking-wide"
+              className="bg-indigo-800 hover:bg-indigo-900 transition ease-in-out px-4 py-3 rounded-md shadow-md justify-center w-full sm:w-2/3 md:w-1/3 mt-6 text-medium font-semibold tracking-wide"
             >
               View courses
             </button>

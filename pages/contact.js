@@ -1,8 +1,11 @@
-import { Fragment, useCallback } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import Footer from "../components/footer/Footer";
 import toast from "../components/toast/Toast";
+import { API } from "aws-amplify";
+import { listUsers } from "../src/graphql/queries";
 
 const Contact = () => {
+  //
   const notify = useCallback((type, message) => {
     toast({ type, message });
   }, []);
@@ -25,7 +28,7 @@ const Contact = () => {
           <p>Phonenumber: 016631641, 9863715907</p>
         </div>
       </div>
-      <div>
+      {/* <div>
         <div onClick={() => notify("success", "Success!")} className="message">
           <p>Success Message</p>
         </div>
@@ -55,7 +58,7 @@ const Contact = () => {
             background: #ccc;
           }
         `}</style>
-      </div>
+      </div> */}
 
       <Footer />
     </Fragment>

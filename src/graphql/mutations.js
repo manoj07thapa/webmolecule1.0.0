@@ -1,6 +1,87 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createUser = /* GraphQL */ `
+  mutation CreateUser(
+    $input: CreateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    createUser(input: $input, condition: $condition) {
+      id
+      username
+      email
+      phone_number
+      courses {
+        items {
+          id
+          userID
+          courseID
+          createdAt
+          updatedAt
+          username
+          tutor
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUser = /* GraphQL */ `
+  mutation UpdateUser(
+    $input: UpdateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    updateUser(input: $input, condition: $condition) {
+      id
+      username
+      email
+      phone_number
+      courses {
+        items {
+          id
+          userID
+          courseID
+          createdAt
+          updatedAt
+          username
+          tutor
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteUser = /* GraphQL */ `
+  mutation DeleteUser(
+    $input: DeleteUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    deleteUser(input: $input, condition: $condition) {
+      id
+      username
+      email
+      phone_number
+      courses {
+        items {
+          id
+          userID
+          courseID
+          createdAt
+          updatedAt
+          username
+          tutor
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createCourse = /* GraphQL */ `
   mutation CreateCourse(
     $input: CreateCourseInput!
@@ -27,6 +108,18 @@ export const createCourse = /* GraphQL */ `
         topic
         description
         duration
+      }
+      users {
+        items {
+          id
+          userID
+          courseID
+          createdAt
+          updatedAt
+          username
+          tutor
+        }
+        nextToken
       }
       createdAt
       updatedAt
@@ -60,6 +153,18 @@ export const updateCourse = /* GraphQL */ `
         description
         duration
       }
+      users {
+        items {
+          id
+          userID
+          courseID
+          createdAt
+          updatedAt
+          username
+          tutor
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -92,6 +197,18 @@ export const deleteCourse = /* GraphQL */ `
         description
         duration
       }
+      users {
+        items {
+          id
+          userID
+          courseID
+          createdAt
+          updatedAt
+          username
+          tutor
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -114,6 +231,7 @@ export const createResource = /* GraphQL */ `
       files
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -134,6 +252,7 @@ export const updateResource = /* GraphQL */ `
       files
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -154,6 +273,172 @@ export const deleteResource = /* GraphQL */ `
       files
       createdAt
       updatedAt
+      owner
+    }
+  }
+`;
+export const createUserCourse = /* GraphQL */ `
+  mutation CreateUserCourse(
+    $input: CreateUserCourseInput!
+    $condition: ModelUserCourseConditionInput
+  ) {
+    createUserCourse(input: $input, condition: $condition) {
+      id
+      userID
+      courseID
+      user {
+        id
+        username
+        email
+        phone_number
+        courses {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      course {
+        id
+        title
+        subtitle
+        category
+        files
+        price
+        language
+        tutor
+        tutorWho
+        relatedSkills
+        youLearn
+        duration
+        framework
+        reqKnowledge
+        level
+        time
+        courseContent {
+          topic
+          description
+          duration
+        }
+        users {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      username
+      tutor
+    }
+  }
+`;
+export const updateUserCourse = /* GraphQL */ `
+  mutation UpdateUserCourse(
+    $input: UpdateUserCourseInput!
+    $condition: ModelUserCourseConditionInput
+  ) {
+    updateUserCourse(input: $input, condition: $condition) {
+      id
+      userID
+      courseID
+      user {
+        id
+        username
+        email
+        phone_number
+        courses {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      course {
+        id
+        title
+        subtitle
+        category
+        files
+        price
+        language
+        tutor
+        tutorWho
+        relatedSkills
+        youLearn
+        duration
+        framework
+        reqKnowledge
+        level
+        time
+        courseContent {
+          topic
+          description
+          duration
+        }
+        users {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      username
+      tutor
+    }
+  }
+`;
+export const deleteUserCourse = /* GraphQL */ `
+  mutation DeleteUserCourse(
+    $input: DeleteUserCourseInput!
+    $condition: ModelUserCourseConditionInput
+  ) {
+    deleteUserCourse(input: $input, condition: $condition) {
+      id
+      userID
+      courseID
+      user {
+        id
+        username
+        email
+        phone_number
+        courses {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      course {
+        id
+        title
+        subtitle
+        category
+        files
+        price
+        language
+        tutor
+        tutorWho
+        relatedSkills
+        youLearn
+        duration
+        framework
+        reqKnowledge
+        level
+        time
+        courseContent {
+          topic
+          description
+          duration
+        }
+        users {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      username
+      tutor
     }
   }
 `;

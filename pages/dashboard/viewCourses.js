@@ -1,10 +1,58 @@
-import { Fragment } from "react";
+import { Fragment, useState, useEffect } from "react";
 import Head from "next/head";
+import { withSSRContext } from "aws-amplify";
 import SidebarLayout from "../../components/dashboard/SidebarLayout";
 import CourseTable from "../../components/dashboard/course/CourseTable";
 import RingSpinner from "../../components/loading/RingSpinner";
+import { useRouter } from "next/router";
+import { listCourses, listUsers } from "../../src/graphql/queries";
+import { API, Storage } from "aws-amplify";
+import { deleteCourse, updateCourse } from "../../src/graphql/mutations";
 
 const ViewCourses = () => {
+  const router = useRouter();
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(false);
+  console.log("DATA", courses);
+
+  const fetchCourses = async () => {
+    try {
+      // setLoading(true);
+      const res = await API.graphql({
+        query: listCourses,
+        authMode: "AMAZON_COGNITO_USER_POOLS",
+      });
+
+      setCourses(res.data.listCourses.items);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCourses();
+  }, []);
+
+  const removeCourse = async (id) => {
+    try {
+      await API.graphql({
+        query: deleteCourse,
+        variables: { input: { id } },
+        authMode: "AMAZON_COGNITO_USER_POOLS",
+      });
+      fetchCourses();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  if (loading) {
+    return <div>Loading..</div>;
+  }
+  if (!courses) {
+    return <div>No courses</div>;
+  }
   return (
     <Fragment>
       <Head>
@@ -17,7 +65,7 @@ const ViewCourses = () => {
           Course List
         </h1>
         <div className="mt-12">
-          <CourseTable />
+          <CourseTable courses={courses} removeCourse={removeCourse} />
         </div>
       </div>
     </Fragment>
@@ -26,3 +74,29 @@ const ViewCourses = () => {
 ViewCourses.PageLayout = SidebarLayout;
 
 export default ViewCourses;
+
+export async function getServerSideProps({ req }) {
+  const SSR = withSSRContext({ req });
+
+  try {
+    const user = await SSR.Auth.currentAuthenticatedUser();
+    const group =
+      user?.signInUserSession?.accessToken?.payload["cognito:groups"];
+
+    if (user && !group.includes("admin")) {
+      return {
+        notFound: true,
+      };
+    }
+  } catch (error) {
+    if ((error = "The user is not authenticated")) {
+      return {
+        notFound: true,
+      };
+    }
+  }
+
+  return {
+    props: {},
+  };
+}

@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import Head from "next/head";
+import { withSSRContext } from "aws-amplify";
 import SidebarLayout from "../../components/dashboard/SidebarLayout";
 import UserTable from "../../components/user/UserTable";
 
@@ -25,3 +26,29 @@ const ViewUsers = () => {
 ViewUsers.PageLayout = SidebarLayout;
 
 export default ViewUsers;
+
+export async function getServerSideProps({ req }) {
+  const SSR = withSSRContext({ req });
+
+  try {
+    const user = await SSR.Auth.currentAuthenticatedUser();
+    const group =
+      user?.signInUserSession?.accessToken?.payload["cognito:groups"];
+
+    if (user && !group.includes("admin")) {
+      return {
+        notFound: true,
+      };
+    }
+  } catch (error) {
+    if ((error = "The user is not authenticated")) {
+      return {
+        notFound: true,
+      };
+    }
+  }
+
+  return {
+    props: {},
+  };
+}

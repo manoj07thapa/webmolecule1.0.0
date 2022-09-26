@@ -9,16 +9,28 @@
       "UnauthRoleName": "amplify-webmolecule100-dev-132049-unauthRole",
       "StackName": "amplify-webmolecule100-dev-132049",
       "StackId": "arn:aws:cloudformation:ap-south-1:469175017431:stack/amplify-webmolecule100-dev-132049/0610f980-34c9-11ed-9b93-06936d13add0",
-      "AmplifyAppId": "d29wnvnc8khna8"
+      "AmplifyAppId": "d29wnvnc8khna8",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-webmolecule100-dev-132049-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
       "auth": {
-        "webmolecule10048e3195b48e3195b": {}
+        "webmolecule10048e3195b48e3195b": {},
+        "userPoolGroups": {}
       },
       "function": {
         "AdminQueries6eb1b594": {
           "deploymentBucketName": "amplify-webmolecule100-dev-132049-deployment",
           "s3Key": "amplify-builds/AdminQueries6eb1b594-6953514943617a4f7533-build.zip"
+        },
+        "webmolecule10048e3195b48e3195bPostConfirmation": {
+          "deploymentBucketName": "amplify-webmolecule100-dev-132049-deployment",
+          "s3Key": "amplify-builds/webmolecule10048e3195b48e3195bPostConfirmation-78366c744958564d7036-build.zip"
+        }
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d29wnvnc8khna8",
+          "type": "cicd"
         }
       }
     }

@@ -1,10 +1,14 @@
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import Head from "next/head";
+import { withSSRContext } from "aws-amplify";
 import { TemplateIcon } from "@heroicons/react/solid";
 import SidebarLayout from "../../../components/dashboard/SidebarLayout";
 import CreateCourse from "../../../components/dashboard/course/CreateCourse";
+import { UserContext } from "../../../hooks/user/UserContext";
 
 const Create = () => {
+  const { user, setUser } = useContext(UserContext);
+
   return (
     <Fragment>
       <Head>
@@ -13,14 +17,12 @@ const Create = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <div className="flex  items-center justify-between bg-violet-600 px-4 py-3 rounded-md shadow">
-          <h2 className="text-xl lg:text-3xl font-bold tracking-wider ">
-            Create Course
-          </h2>
+        <div className="flex  items-center justify-between bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 px-4 py-3 rounded-md shadow">
+          <h2 className="text-xl  font-bold tracking-wider ">Create Course</h2>
           <TemplateIcon className="h-6 w-6 text-pink-700" />
         </div>
         <div className="">
-          <CreateCourse />
+          <CreateCourse user={user} />
         </div>
       </div>
     </Fragment>
@@ -29,3 +31,28 @@ const Create = () => {
 
 Create.PageLayout = SidebarLayout;
 export default Create;
+
+// export async function getServerSideProps({ req }) {
+//   const SSR = withSSRContext({ req });
+
+//   try {
+//     const user = await SSR.Auth.currentAuthenticatedUser();
+//     const group =
+//       user?.signInUserSession?.accessToken?.payload["cognito:groups"];
+//     if (user && group.includes("student")) {
+//       return {
+//         notFound: true,
+//       };
+//     }
+//   } catch (error) {
+//     if ((error = "The user is not authenticated")) {
+//       return {
+//         notFound: true,
+//       };
+//     }
+//   }
+
+//   return {
+//     props: {},
+//   };
+// }

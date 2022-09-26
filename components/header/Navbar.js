@@ -20,13 +20,14 @@ export default function Navbar({}) {
 
   const { user, setUser } = useContext(UserContext);
 
-  useEffect(() => {
-    async function authListner() {
-      const user = await Auth.currentAuthenticatedUser();
-      setUser(user);
-    }
-    authListner();
-  }, [setUser]);
+  // useEffect(() => {
+  //   async function authListner() {
+  //     const user = await Auth.currentAuthenticatedUser();
+  //     setUser(user);
+  //     setLoading(false);
+  //   }
+  //   authListner();
+  // }, [setUser, setLoading]);
 
   return (
     <Popover className="relative bg-slate-900">
@@ -189,7 +190,7 @@ export default function Navbar({}) {
 
           <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
             {user ? (
-              <UserMenu setUser={setUser} />
+              <UserMenu setUser={setUser} user={user} />
             ) : (
               <div>
                 <Link href="/auth/signIn">

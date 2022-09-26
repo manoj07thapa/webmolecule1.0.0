@@ -12,7 +12,7 @@ import { courseSchema } from "../../../validation/course/course";
 import { toast } from "react-toastify";
 import RingSpinner from "../../loading/RingSpinner";
 
-export default function CreateCourse() {
+export default function CreateCourse({ user }) {
   const initialValues = {
     title: "",
     subtitle: "",
@@ -21,7 +21,7 @@ export default function CreateCourse() {
     files: [],
     language: "",
     courseContent: [{ topic: "", description: "", duration: "" }],
-    tutor: "",
+    tutor: user.username,
     tutorWho: "",
     relatedSkills: [""],
     youLearn: [""],

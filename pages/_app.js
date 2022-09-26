@@ -1,13 +1,22 @@
 import "../styles/globals.css";
 import "../amplifyConfig";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Navbar from "../components/header/Navbar";
 import { UserContext } from "../hooks/user/UserContext";
 import { ToastContainer } from "react-toastify";
+import { Auth } from "aws-amplify";
 import "react-toastify/dist/ReactToastify.css";
 
 function MyApp({ Component, pageProps }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    async function authListner() {
+      const user = await Auth.currentAuthenticatedUser();
+      setUser(user);
+    }
+    authListner();
+  }, [setUser]);
 
   const value = useMemo(() => ({ user, setUser }), [user, setUser]);
 

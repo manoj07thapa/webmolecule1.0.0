@@ -1,10 +1,27 @@
+type User
+  @model
+  @auth(
+    rules: [
+      { allow: groups, groups: ["admin"] }
+      { allow: owner, ownerField: "username", operations: [read] }
+    ]
+  ) {
+  id: ID!
+  username: String!
+  email: String!
+  phone_number: String!
+  courses: [Course] @manyToMany(relationName: "UserCourse")
+}
+
 type Course
   @model(subscriptions: null)
   @auth(
     rules: [
       { allow: groups, groups: ["admin"] }
-      { allow: private, operations: [read] }
+      { allow: groups, groups: ["teacher"], operations: [read, create] }
+      { allow: private }
       { allow: public, operations: [read] }
+      { allow: owner, ownerField: "tutor" }
     ]
   ) {
   id: ID!
@@ -24,6 +41,7 @@ type Course
   level: String!
   time: String!
   courseContent: [Syllabus]
+  users: [User] @manyToMany(relationName: "UserCourse")
 }
 
 type Syllabus {
@@ -37,8 +55,9 @@ type Resource
   @auth(
     rules: [
       { allow: groups, groups: ["admin"] }
-      { allow: private, operations: [read] }
+      { allow: private }
       { allow: public, operations: [read] }
+      { allow: owner, operations: [read] }
     ]
   ) {
   id: ID!
