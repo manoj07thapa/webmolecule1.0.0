@@ -231,7 +231,6 @@ export const createResource = /* GraphQL */ `
       files
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -252,7 +251,6 @@ export const updateResource = /* GraphQL */ `
       files
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -273,7 +271,6 @@ export const deleteResource = /* GraphQL */ `
       files
       createdAt
       updatedAt
-      owner
     }
   }
 `;

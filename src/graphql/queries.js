@@ -141,7 +141,6 @@ export const getResource = /* GraphQL */ `
       files
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -164,7 +163,6 @@ export const listResources = /* GraphQL */ `
         files
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }

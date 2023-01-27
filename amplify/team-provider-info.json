@@ -32,6 +32,13 @@
           "appId": "d29wnvnc8khna8",
           "type": "cicd"
         }
+      },
+      "api": {
+        "AdminQueries": {},
+        "webmolecule100": {}
+      },
+      "storage": {
+        "webmolecule": {}
       }
     }
   }

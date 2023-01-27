@@ -64,7 +64,6 @@ type Resource
       { allow: groups, groups: ["admin"] }
       { allow: private, operations: [read] }
       { allow: public, operations: [read] }
-      { allow: owner, operations: [read] }
     ]
   ) {
   id: ID!
