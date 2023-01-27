@@ -7,7 +7,7 @@ type User
       {
         allow: owner
         ownerField: "username"
-        operations: [read, create, update]
+        operations: [read, create]
       }
     ]
   ) {
@@ -25,10 +25,10 @@ type Course
   @auth(
     rules: [
       { allow: groups, groups: ["admin"] }
-      { allow: groups, groups: ["teacher"], operations: [read, create, update, delete] }
+      { allow: groups, groups: ["teacher"], operations: [read, create, update] }
       { allow: private, operations: [read] }
       { allow: public, operations: [read] }
-      { allow: owner, ownerField: "tutor", operations: [read, update, delete] }
+      { allow: owner, ownerField: "tutor", operations: [read, create] }
     ]
   ) {
   id: ID!
