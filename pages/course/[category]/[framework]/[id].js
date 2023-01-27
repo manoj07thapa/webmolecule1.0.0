@@ -248,12 +248,14 @@ const Course = ({ ssgCourse }) => {
             </section>
           </div>
         </div>
-        <StickyCourse
-          course={ssgCourse}
-          image={courseImage}
-          user={user}
-          addCourseToUser={addCourseToUser}
-        />
+        {(ssgCourse && courseImage) &&
+          <StickyCourse
+            course={ssgCourse}
+            image={courseImage}
+            user={user}
+            addCourseToUser={addCourseToUser}
+          />}
+
       </div>
       <Footer />
     </FramerMotion>
