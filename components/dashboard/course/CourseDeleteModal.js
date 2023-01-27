@@ -4,10 +4,10 @@ import { Fragment, useState } from "react";
 export default function CourseDeleteModal({
   isOpen,
   closeModal,
-  removeCourse,
-  courseId,
+  deleteUserCourse,
+  userId
 }) {
-  console.log("courseEDITMODAL", courseId);
+  console.log('USERID', userId);
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -54,7 +54,7 @@ export default function CourseDeleteModal({
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={() => {
-                        removeCourse(courseId);
+                        deleteUserCourse(userId);
                         closeModal();
                       }}
                     >

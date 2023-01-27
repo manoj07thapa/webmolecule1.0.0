@@ -1,6 +1,10 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import CreateCourse from "./CreateCourse";
+import EditCourse from "./multiStepCourseEdit/EditCourse";
+import Home from "./multiStepCourseEdit/testStepper/Home";
+import { TemplateIcon } from "@heroicons/react/solid";
+
 
 export default function CourseEditModal({ isOpen, closeModal, id, course }) {
   console.log("courseEDITMODAL", id);
@@ -17,43 +21,32 @@ export default function CourseEditModal({ isOpen, closeModal, id, course }) {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className="fixed inset-0 bg-black bg-opacity-75" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
-                enter="ease-out duration-300"
+                enter="ease-out duration-500"
                 enterFrom="opacity-0 scale-95"
                 enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
+                leave="ease-in duration-500"
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-5xl  transform overflow-hidden rounded-md bg-slate-800 p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
+                    className="text-lg font-medium leading-6  "
                   >
-                    Payment successful
+                    <div className="flex  items-center justify-between bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 px-4 py-3 rounded-md shadow">
+                      <h2 className="text-xl  font-bold tracking-wider ">Edit Course</h2>
+                      <TemplateIcon className="h-6 w-6 text-pink-700" />
+                    </div>
                   </Dialog.Title>
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      Your payment has been successfully submitted. We’ve sent
-                      you an email with all of the details of your order.
-                    </p>
-                  </div>
-                  <p className="text-gray-700">{course.title}</p>
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
-                    >
-                      Got it, thanks!
-                    </button>
-                  </div>
+                  {/* <EditCourse /> */}
+                  <Home />
                 </Dialog.Panel>
               </Transition.Child>
             </div>

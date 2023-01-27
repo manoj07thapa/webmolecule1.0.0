@@ -1,27 +1,34 @@
 type User
-  @model
+  @model(subscriptions: null)
   @auth(
     rules: [
       { allow: groups, groups: ["admin"] }
-      { allow: owner, ownerField: "username", operations: [read] }
+      { allow: groups, groups: ["teacher"] }
+      {
+        allow: owner
+        ownerField: "username"
+        operations: [read, create, update]
+      }
     ]
   ) {
   id: ID!
   username: String!
   email: String!
   phone_number: String!
-  courses: [Course] @manyToMany(relationName: "UserCourse")
+  enrolledCourses: [Course] @manyToMany(relationName: "UserCourses")
 }
+
+
 
 type Course
   @model(subscriptions: null)
   @auth(
     rules: [
       { allow: groups, groups: ["admin"] }
-      { allow: groups, groups: ["teacher"], operations: [read, create] }
-      { allow: private }
+      { allow: groups, groups: ["teacher"], operations: [read, create, update, delete] }
+      { allow: private, operations: [read] }
       { allow: public, operations: [read] }
-      { allow: owner, ownerField: "tutor" }
+      { allow: owner, ownerField: "tutor", operations: [read, update, delete] }
     ]
   ) {
   id: ID!
@@ -41,7 +48,7 @@ type Course
   level: String!
   time: String!
   courseContent: [Syllabus]
-  users: [User] @manyToMany(relationName: "UserCourse")
+  enrollees: [User] @manyToMany(relationName: "UserCourses")
 }
 
 type Syllabus {
@@ -55,7 +62,7 @@ type Resource
   @auth(
     rules: [
       { allow: groups, groups: ["admin"] }
-      { allow: private }
+      { allow: private, operations: [read] }
       { allow: public, operations: [read] }
       { allow: owner, operations: [read] }
     ]

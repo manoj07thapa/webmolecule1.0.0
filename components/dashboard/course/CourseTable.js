@@ -1,113 +1,97 @@
-import { useState, useEffect } from "react";
-import { API, Storage } from "aws-amplify";
-import { listCourses } from "../../../src/graphql/queries";
-import { deleteCourse, updateCourse } from "../../../src/graphql/mutations";
-import CourseEditModal from "./CourseEditModal";
-import CourseDeleteModal from "./CourseDeleteModal";
-import RingSpinner from "../../loading/RingSpinner";
+import Link from "next/link";
+import { useState } from "react";
+// import CourseDeleteModal from "./CourseDeleteModal";
+const columns = [
+  { header: "Title", accessor: "title" },
+  { header: "Category", accessor: "category" },
+  { header: "Framework", accessor: "framework" },
+  { header: "Price", accessor: "price" },
+  { header: "Duration", accessor: "duration" },
+];
+const CourseTable = ({ courses, removeCourse, username }) => {
+  //   console.log("CoursesTeacher", courses);
+  // let [isOpen, setIsOpen] = useState(false);
 
-const CourseTable = ({ courses, removeCourse }) => {
-  let [isOpen, setIsOpen] = useState(false);
-  let [isOpenDel, setIsOpenDel] = useState(true);
+  // function closeModal() {
+  //   setIsOpen(false);
+  // }
 
-  function closeModal() {
-    setIsOpen(false);
-  }
+  // function openModal() {
+  //   setIsOpen(true);
+  // }
+  // const [selectedRows, setSelectedRows] = useState([]);
 
-  function openModal() {
-    setIsOpen(true);
-  }
+  // const handleCheckboxChange = (e, row) => {
+  //   if (e.target.checked) {
+  //     setSelectedRows([...selectedRows, row]);
+  //   } else {
+  //     setSelectedRows(
+  //       selectedRows.filter((selectedRow) => selectedRow !== row)
+  //     );
+  //   }
+  // };
 
-  function closeDelModal() {
-    setIsOpenDel(false);
-  }
-
-  function openDelModal() {
-    setIsOpenDel(true);
-  }
+  // const isRowSelected = (row) => selectedRows.indexOf(row) > -1;
 
   return (
-    <div className="overflow-x-auto relative shadow-md rounded-md">
+    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr className="tracking-wider">
-            <th scope="col" className="py-3 px-6">
-              Title
-            </th>
-            <th scope="col" className="py-3 px-6">
-              Category
-            </th>
-            <th scope="col" className="py-3 px-6">
-              Framework
-            </th>
-            <th scope="col" className="py-3 px-6">
-              Tutor
-            </th>
-            <th scope="col" className="py-3 px-6">
-              Price
-            </th>
-            <th scope="col" className="py-3 px-6">
-              Duration
-            </th>
-            <th scope="col" className="py-3 px-6">
-              Time
-            </th>
-            <th scope="col" className="py-3 px-6">
-              <span className="">Actions</span>
-            </th>
+        <thead className="text-xs text-gray-100 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 ">
+          <tr>
+            {/* <th className="px-4 py-2"></th> */}
+            {columns.map((column) => (
+              <th scope="col" className="px-6 py-3" key={column.header}>
+                {column.header}
+              </th>
+            ))}
+            <th className="px-4 py-2">Actions</th>
           </tr>
         </thead>
-
-        <tbody>
-          {courses.map((course) => (
+        <tbody className="">
+          {courses.map((row) => (
             <tr
-              key={course.id}
-              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              className=" text-white  border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-500 dark:hover:bg-gray-600"
+              key={row.id}
             >
-              <td
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                {course.title}
+              {/* <td className="px-4 py-2">
+                <input
+                  type="checkbox"
+                  onChange={(e) => handleCheckboxChange(e, row)}
+                />
+              </td> */}
+              {columns.map((column) => (
+                <td className="px-6 py-4" key={`${row.id}-${column.accessor}`}>
+                  {" "}
+                  {row[column.accessor]}
+                </td>
+              ))}
+              <td className="px-6 py-4 text-green-300 ">
+                <Link href={`/dashboard/${username}/courses/${row.id}`}>
+                  <a>view detail</a>
+                </Link>
               </td>
-              <td className="py-4 px-6">{course.category}</td>
-              <td className="py-4 px-6">{course.framework}</td>
-              <td className="py-4 px-6">{course.tutor}</td>
-              <td className="py-4 px-6">{course.price}</td>
-              <td className="py-4 px-6">{course.duration}</td>
-              <td className="py-4 px-6">{course.time}</td>
-              <td className="py-4 px-6 text-right space-x-4 flex">
-                <div>
-                  <button
-                    className="font-medium text-green-600 dark:text-green-500 hover:underline"
-                    onClick={() => openModal()}
-                  >
-                    Edit
-                  </button>
-                  {isOpen && (
-                    <CourseEditModal
-                      isOpen={isOpen}
-                      closeModal={closeModal}
-                      id={course?.id}
-                      course={course}
-                    />
-                  )}
-                </div>
-                <div>
-                  <button
-                    className="font-medium text-red-600 dark:text-red-500 hover:underline"
-                    onClick={() => removeCourse(course.id)}
-                  >
-                    Delete
-                  </button>{" "}
-                  {/* <CourseDeleteModal
-                    isOpen={isOpenDel}
-                    closeModal={closeDelModal}
+              {/* <td className={`px-4 py-2 ${isRowSelected(row) ? "" : "hidden"}`}>
+                <button
+                  className="bg-blue-500 text-white px-2 py-1 rounded-sm mr-2"
+                  onClick={() => openModal()}
+                >
+                  Edit
+                </button>
+                {isOpen && (
+                  <CourseDeleteModal
+                    isOpen={isOpen}
+                    closeModal={closeModal}
                     removeCourse={removeCourse}
-                    courseId={course.id}
-                  /> */}
-                </div>
-              </td>
+                    courseId={row.id}
+                  />
+                )}
+                <button
+                  className="bg-red-500 text-white px-2 py-1 rounded-sm"
+                  onClick={() => onDelete(row)}
+                >
+                  Delete
+                </button>
+              </td> */}
             </tr>
           ))}
         </tbody>

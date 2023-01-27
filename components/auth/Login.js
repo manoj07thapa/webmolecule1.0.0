@@ -44,7 +44,7 @@ function Login() {
         </div>
         <div className="w-full max-w-md lg:max-w-lg mt-16 ">
           <div className=" mt-10 rounded-md bg-violet-100 px-12 py-8 shadow-lg">
-            <h3 className="text-xl font-extrabold tracking-wide text-gray-600 text-center underline">
+            <h3 className="text-lg font-extrabold tracking-wide  text-center  bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-md px-4 py-2 text-white">
               Sign in to your account
             </h3>
             <div className="mt-10">

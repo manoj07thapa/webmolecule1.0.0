@@ -4,24 +4,44 @@ import Image from "next/image";
 import { StarIcon } from "@heroicons/react/solid";
 import { UserContext } from "../../hooks/user/UserContext";
 import { createUserCourse } from "../../src/graphql/mutations";
-import { API } from "aws-amplify";
+import { motion } from "framer-motion";
+
+
+const variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.3
+    }
+  }
+}
+
+const image = {
+  hidden: {
+    opacity: 0,
+    y: 30
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 1
+    }
+  }
+}
 
 export default function ProductCard({ courses }) {
-  const { user } = useContext(UserContext);
-  const userID = user.attributes.sub;
-  const addCourseToUser = async (courseID) => {
-    const res = await API.graphql({
-      query: createUserCourse,
-      variables: { input: { courseID, userID } },
-      authMode: "AMAZON_COGNITO_USER_POOLS",
-    });
-    console.log("USERCOURSE", res);
-  };
   return (
     <Fragment>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 ">
+      <motion.div
+        variants={variants}
+        initial="hidden"
+        animate="show"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 ">
         {courses.map((course) => (
-          <div
+          <motion.div
+            variants={variants}
             key={course.id}
             className="bg-violet-100 rounded-md overflow-hidden"
           >
@@ -55,30 +75,20 @@ export default function ProductCard({ courses }) {
                 </p>
                 <p className="text-sm text-gray-700">Rs: {course.price}</p>
               </div>
-              <div className="flex justify-between">
-                <div className="pt-4 text-right">
-                  <button
-                    type="button"
-                    className="text-gray-700 text-sm"
-                    onClick={() => addCourseToUser(course.id)}
-                  >
-                    Enroll now
-                  </button>
-                </div>
-                <div className="pt-4 text-right">
-                  <Link
-                    href={`/course/${course.category}/${course.framework}/${course.id}`}
-                  >
-                    <a className="bg-pink-500 px-4 py-2 text-white text-medium font-medium rounded-md shadow-sm hover:bg-pink-600 hover:shadow-lg transition ease-in-out ">
-                      View Detail
-                    </a>
-                  </Link>
-                </div>
+
+              <div className="pt-4 text-right">
+                <Link
+                  href={`/course/${course.category}/${course.framework}/${course.id}`}
+                >
+                  <a className="bg-pink-500 px-4 py-2 text-white text-medium font-medium rounded-md shadow-sm hover:bg-pink-600 hover:shadow-lg transition ease-in-out ">
+                    View Detail
+                  </a>
+                </Link>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </Fragment>
   );
 }

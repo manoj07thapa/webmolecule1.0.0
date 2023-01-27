@@ -15,7 +15,7 @@ function classNames(...classes) {
 }
 
 const UserMenu = ({ setUser, user }) => {
-  const group = user.signInUserSession.accessToken.payload["cognito:groups"];
+  const group = user?.signInUserSession.accessToken.payload["cognito:groups"];
   const router = useRouter();
   return (
     <div>
@@ -73,8 +73,8 @@ const UserMenu = ({ setUser, user }) => {
                       )}
                       onClick={() => {
                         Auth.signOut();
-                        setUser(null);
                         router.push("/");
+                        setUser(null);
                       }}
                     >
                       <LogoutIcon className="h-4 w-4 text-pink-600" />

@@ -21,7 +21,7 @@ export default function CreateCourse({ user }) {
     files: [],
     language: "",
     courseContent: [{ topic: "", description: "", duration: "" }],
-    tutor: user.username,
+    tutor: user?.username,
     tutorWho: "",
     relatedSkills: [""],
     youLearn: [""],
@@ -57,7 +57,10 @@ export default function CreateCourse({ user }) {
       // }
     } catch (error) {
       console.log("ERROR", error);
-      if (error.errors[0].errorType === "Unauthorized") {
+      if (
+        error.errors[0].errorType === "Unauthorized" ||
+        error.AccessDenied === "Access Denied"
+      ) {
         toast.error("Access denied");
       } else {
         toast.error("Course couldnot be created");
@@ -87,9 +90,8 @@ export default function CreateCourse({ user }) {
                   type="text"
                   id="title"
                   value={values.title}
-                  className={`${
-                    errors.title ? " field field-error" : " field"
-                  } `}
+                  className={`${errors.title ? " field field-error" : " field"
+                    } `}
                 />
                 <div className="mt-1 text-xs text-red-500">
                   {errors.title && errors.title}
@@ -109,9 +111,8 @@ export default function CreateCourse({ user }) {
                   rows="2"
                   as="textarea"
                   value={values.subtitle}
-                  className={`${
-                    errors.subtitle ? " field field-error" : " field"
-                  } `}
+                  className={`${errors.subtitle ? " field field-error" : " field"
+                    } `}
                 />
                 <div className="mt-1 text-xs text-red-500">
                   {errors.subtitle && errors.subtitle}
@@ -131,9 +132,8 @@ export default function CreateCourse({ user }) {
                     type="text"
                     id="language"
                     value={values.language}
-                    className={`${
-                      errors.language ? " field field-error" : " field "
-                    } `}
+                    className={`${errors.language ? " field field-error" : " field "
+                      } `}
                   >
                     {languages.map((c) => (
                       <option key={c} value={c} className="py-3 bg-gray-200 ">
@@ -157,9 +157,8 @@ export default function CreateCourse({ user }) {
                     type="number"
                     id="price"
                     value={values.price}
-                    className={`${
-                      errors.price ? " field field-error" : " field"
-                    } `}
+                    className={`${errors.price ? " field field-error" : " field"
+                      } `}
                   />
                   <div className="mt-1 text-xs text-red-500">
                     {errors.price && errors.price}
@@ -180,9 +179,8 @@ export default function CreateCourse({ user }) {
                     type="text"
                     id="category"
                     value={values.category}
-                    className={`${
-                      errors.category ? " field field-error" : " field"
-                    } `}
+                    className={`${errors.category ? " field field-error" : " field"
+                      } `}
                   >
                     {categories.map((c) => (
                       <option
@@ -214,9 +212,8 @@ export default function CreateCourse({ user }) {
                     type="text"
                     id="duration"
                     value={values.duration}
-                    className={`${
-                      errors.duration ? " field field-error" : " field"
-                    } `}
+                    className={`${errors.duration ? " field field-error" : " field"
+                      } `}
                   />
                   <div className="mt-1 text-xs text-red-500">
                     {errors.duration && errors.duration}
@@ -234,9 +231,8 @@ export default function CreateCourse({ user }) {
                     type="text"
                     id="time"
                     value={values.time}
-                    className={`${
-                      errors.time ? " field field-error" : " field"
-                    } `}
+                    className={`${errors.time ? " field field-error" : " field"
+                      } `}
                   />
                   <div className="mt-1 text-xs text-red-500">
                     {errors.time && errors.time}
@@ -256,9 +252,8 @@ export default function CreateCourse({ user }) {
                     type="text"
                     id="tutor"
                     value={values.tutor}
-                    className={`${
-                      errors.tutor ? " field field-error" : " field "
-                    } `}
+                    className={`${errors.tutor ? " field field-error" : " field "
+                      } `}
                   />
 
                   <div className="mt-1 text-xs text-red-500">
@@ -277,9 +272,8 @@ export default function CreateCourse({ user }) {
                     type="text"
                     id="tutorWho"
                     value={values.tutorWho}
-                    className={`${
-                      errors.tutorWho ? " field field-error" : " field"
-                    } `}
+                    className={`${errors.tutorWho ? " field field-error" : " field"
+                      } `}
                   />
                   <div className="mt-1 text-xs text-red-500">
                     {errors.tutorWho && errors.tutorWho}
@@ -300,9 +294,8 @@ export default function CreateCourse({ user }) {
                     type="text"
                     id="level"
                     value={values.level}
-                    className={`${
-                      errors.level ? " field field-error" : " field"
-                    } `}
+                    className={`${errors.level ? " field field-error" : " field"
+                      } `}
                   >
                     {level.map((c) => (
                       <option
@@ -330,9 +323,8 @@ export default function CreateCourse({ user }) {
                     type="text"
                     id="reqKnowledge"
                     value={values.reqKnowledge}
-                    className={`${
-                      errors.reqKnowledge ? " field field-error" : " field "
-                    } `}
+                    className={`${errors.reqKnowledge ? " field field-error" : " field "
+                      } `}
                   />
 
                   <div className="mt-1 text-xs text-red-500">
@@ -367,11 +359,10 @@ export default function CreateCourse({ user }) {
                                   name={`relatedSkills[${index}]`}
                                   type="text"
                                   id="relatedSkills"
-                                  className={`${
-                                    errors.length === 0
-                                      ? "field field-error"
-                                      : "field placeholder:text-sm placeholder:italic"
-                                  }`}
+                                  className={`${errors.length === 0
+                                    ? "field field-error"
+                                    : "field placeholder:text-sm placeholder:italic"
+                                    }`}
                                   placeholder="tech stacks.."
                                 />
                                 <div className="mt-1 text-xs text-red-500">
@@ -431,11 +422,10 @@ export default function CreateCourse({ user }) {
                                   name={`youLearn[${index}]`}
                                   type="text"
                                   id="youLearn"
-                                  className={`${
-                                    errors.length === 0
-                                      ? "field field-error"
-                                      : "field placeholder:text-sm placeholder:italic"
-                                  }`}
+                                  className={`${errors.length === 0
+                                    ? "field field-error"
+                                    : "field placeholder:text-sm placeholder:italic"
+                                    }`}
                                   placeholder="Skils..."
                                 />
                                 <div className="mt-1 text-xs text-red-500">
@@ -495,11 +485,10 @@ export default function CreateCourse({ user }) {
                                   name={`courseContent[${index}].topic`}
                                   type="text"
                                   id="courseContentTitle"
-                                  className={`${
-                                    errors.length === 0
-                                      ? "field field-error"
-                                      : "field placeholder:text-sm placeholder:italic"
-                                  }`}
+                                  className={`${errors.length === 0
+                                    ? "field field-error"
+                                    : "field placeholder:text-sm placeholder:italic"
+                                    }`}
                                   placeholder="Topic..."
                                 />
                                 <Field
@@ -508,11 +497,10 @@ export default function CreateCourse({ user }) {
                                   id="courseContentDesc"
                                   as="textarea"
                                   rows="4"
-                                  className={`${
-                                    errors.length === 0
-                                      ? "field field-error"
-                                      : "field placeholder:text-sm placeholder:italic"
-                                  }`}
+                                  className={`${errors.length === 0
+                                    ? "field field-error"
+                                    : "field placeholder:text-sm placeholder:italic"
+                                    }`}
                                   placeholder="Description..."
                                 />
                                 <Field
@@ -520,11 +508,10 @@ export default function CreateCourse({ user }) {
                                   type="text"
                                   id="courseContentDuration"
                                   rows="4"
-                                  className={`${
-                                    errors.length === 0
-                                      ? "field field-error"
-                                      : "field placeholder:text-sm placeholder:italic"
-                                  }`}
+                                  className={`${errors.length === 0
+                                    ? "field field-error"
+                                    : "field placeholder:text-sm placeholder:italic"
+                                    }`}
                                   placeholder="Duration..."
                                 />{" "}
                                 <div className="mt-1 text-xs text-red-500">
@@ -568,9 +555,8 @@ export default function CreateCourse({ user }) {
                 <button
                   disabled={isSubmitting}
                   type="submit"
-                  className={`${
-                    isSubmitting ? "bg-gray-800" : ""
-                  }  text-medium w-full rounded-md bg-pink-500 px-7 py-4 font-semibold uppercase  tracking-wider text-white hover:bg-pink-600 `}
+                  className={`${isSubmitting ? "bg-gray-800" : ""
+                    }  text-medium w-full rounded-md bg-pink-500 px-7 py-4 font-semibold uppercase  tracking-wider text-white hover:bg-pink-600 `}
                 >
                   <span className="text-center">
                     {isSubmitting ? <RingSpinner /> : "Submit"}

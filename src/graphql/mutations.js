@@ -11,7 +11,7 @@ export const createUser = /* GraphQL */ `
       username
       email
       phone_number
-      courses {
+      enrolledCourses {
         items {
           id
           userID
@@ -38,7 +38,7 @@ export const updateUser = /* GraphQL */ `
       username
       email
       phone_number
-      courses {
+      enrolledCourses {
         items {
           id
           userID
@@ -65,7 +65,7 @@ export const deleteUser = /* GraphQL */ `
       username
       email
       phone_number
-      courses {
+      enrolledCourses {
         items {
           id
           userID
@@ -109,7 +109,7 @@ export const createCourse = /* GraphQL */ `
         description
         duration
       }
-      users {
+      enrollees {
         items {
           id
           userID
@@ -153,7 +153,7 @@ export const updateCourse = /* GraphQL */ `
         description
         duration
       }
-      users {
+      enrollees {
         items {
           id
           userID
@@ -197,7 +197,7 @@ export const deleteCourse = /* GraphQL */ `
         description
         duration
       }
-      users {
+      enrollees {
         items {
           id
           userID
@@ -277,12 +277,12 @@ export const deleteResource = /* GraphQL */ `
     }
   }
 `;
-export const createUserCourse = /* GraphQL */ `
-  mutation CreateUserCourse(
-    $input: CreateUserCourseInput!
-    $condition: ModelUserCourseConditionInput
+export const createUserCourses = /* GraphQL */ `
+  mutation CreateUserCourses(
+    $input: CreateUserCoursesInput!
+    $condition: ModelUserCoursesConditionInput
   ) {
-    createUserCourse(input: $input, condition: $condition) {
+    createUserCourses(input: $input, condition: $condition) {
       id
       userID
       courseID
@@ -291,7 +291,7 @@ export const createUserCourse = /* GraphQL */ `
         username
         email
         phone_number
-        courses {
+        enrolledCourses {
           nextToken
         }
         createdAt
@@ -319,7 +319,7 @@ export const createUserCourse = /* GraphQL */ `
           description
           duration
         }
-        users {
+        enrollees {
           nextToken
         }
         createdAt
@@ -332,12 +332,12 @@ export const createUserCourse = /* GraphQL */ `
     }
   }
 `;
-export const updateUserCourse = /* GraphQL */ `
-  mutation UpdateUserCourse(
-    $input: UpdateUserCourseInput!
-    $condition: ModelUserCourseConditionInput
+export const updateUserCourses = /* GraphQL */ `
+  mutation UpdateUserCourses(
+    $input: UpdateUserCoursesInput!
+    $condition: ModelUserCoursesConditionInput
   ) {
-    updateUserCourse(input: $input, condition: $condition) {
+    updateUserCourses(input: $input, condition: $condition) {
       id
       userID
       courseID
@@ -346,7 +346,7 @@ export const updateUserCourse = /* GraphQL */ `
         username
         email
         phone_number
-        courses {
+        enrolledCourses {
           nextToken
         }
         createdAt
@@ -374,7 +374,7 @@ export const updateUserCourse = /* GraphQL */ `
           description
           duration
         }
-        users {
+        enrollees {
           nextToken
         }
         createdAt
@@ -387,12 +387,12 @@ export const updateUserCourse = /* GraphQL */ `
     }
   }
 `;
-export const deleteUserCourse = /* GraphQL */ `
-  mutation DeleteUserCourse(
-    $input: DeleteUserCourseInput!
-    $condition: ModelUserCourseConditionInput
+export const deleteUserCourses = /* GraphQL */ `
+  mutation DeleteUserCourses(
+    $input: DeleteUserCoursesInput!
+    $condition: ModelUserCoursesConditionInput
   ) {
-    deleteUserCourse(input: $input, condition: $condition) {
+    deleteUserCourses(input: $input, condition: $condition) {
       id
       userID
       courseID
@@ -401,7 +401,7 @@ export const deleteUserCourse = /* GraphQL */ `
         username
         email
         phone_number
-        courses {
+        enrolledCourses {
           nextToken
         }
         createdAt
@@ -429,7 +429,7 @@ export const deleteUserCourse = /* GraphQL */ `
           description
           duration
         }
-        users {
+        enrollees {
           nextToken
         }
         createdAt

@@ -1,9 +1,9 @@
-import SidebarLayout from "../../components/dashboard/SidebarLayout";
+import SidebarLayout from "../../../components/dashboard/SidebarLayout";
 import { useState, useEffect, useContext, useCallback } from "react";
 import { API } from "aws-amplify";
-import { listUserCourses } from "../../src/graphql/queries";
-import { UserContext } from "../../hooks/user/UserContext";
-import CourseTable from "../../components/dashboard/course/CourseTable";
+import { getUserWithEnrolledCourses } from "../../../src/customGraphql/queries";
+import { UserContext } from "../../../hooks/user/UserContext";
+import CourseTable from "../../../components/dashboard/course/CourseTable";
 
 const EnrolledCourses = () => {
   const { user } = useContext(UserContext);
@@ -20,12 +20,12 @@ const EnrolledCourses = () => {
         };
         // setLoading(true);
         const res = await API.graphql({
-          query: listUserCourses,
-          variables: { filter },
+          query: getUserWithEnrolledCourses,
+          variables: { id: userID },
           authMode: "AMAZON_COGNITO_USER_POOLS",
         });
         console.log("RES", res);
-        setCourses(res.data.listUserCourses.items);
+        setCourses(res.data.getUser);
       } catch (error) {
         console.log(error);
       }

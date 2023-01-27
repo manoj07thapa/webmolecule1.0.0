@@ -1,6 +1,8 @@
+import { motion, AnimatePresence } from "framer-motion";
+
 const BuildSection = () => {
   return (
-    <div className="text-left sm:text-center sm:px-40 border-b border-gray-800 py-12">
+    <motion.div viewport={{ once: false }} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ type: "easeIn", duration: 5, delay: 1 * .15 }} className="text-left sm:text-center sm:px-40 border-b border-gray-800 py-12">
       <h1 className="text-2xl sm:text-4xl  font-extrabold pl-2">
         Build whatever you want, seriously.
       </h1>
@@ -15,7 +17,7 @@ const BuildSection = () => {
       >
         Start Now
       </button>
-    </div>
+    </motion.div>
   );
 };
 export default BuildSection;

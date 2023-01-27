@@ -41,7 +41,7 @@ function SignUpForm() {
       </div>
       <div className="w-full max-w-md lg:max-w-lg mt-12">
         <div className=" mt-4 rounded-md bg-violet-100 px-12 py-10 shadow-md">
-          <h3 className="text-lg font-bold tracking-wide text-gray-600 text-center underline pb-2">
+          <h3 className="text-lg font-bold tracking-wide  text-center pb-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-md px-4 py-2 text-white">
             Sign up for a new account
           </h3>
           <Formik

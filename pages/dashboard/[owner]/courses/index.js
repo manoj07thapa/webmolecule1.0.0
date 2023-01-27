@@ -1,31 +1,27 @@
 import { useState, useEffect, useContext, useCallback } from "react";
 import { API, Auth } from "aws-amplify";
-import SidebarLayout from "../../../components/dashboard/SidebarLayout";
-import {
-  listCourses,
-  listUserCourses,
-  listUsers,
-} from "../../../src/graphql/queries";
-import { deleteCourse } from "../../../src/graphql/mutations";
-import CourseTable from "../../../components/dashboard/course/CourseTable";
-import { UserContext } from "../../../hooks/user/UserContext";
+import SidebarLayout from "../../../../components/dashboard/SidebarLayout";
+import { listCoursesWithEnrollees } from "../../../../src/customGraphql/queries";
+import { deleteCourse } from "../../../../src/graphql/mutations";
+import CourseTable from "../../../../components/dashboard/course/CourseTable";
+import { UserContext } from "../../../../hooks/user/UserContext";
+import { listUserCourses } from "../../../../src/graphql/queries";
+import FramerMotion from "../../../../components/sharedLayouts/FramerMotion";
+// import CourseTable1 from "../../../../../components/dashboard/course/CourseTable1";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
   const { user } = useContext(UserContext);
-  console.log("CONTEXTUSER", user);
-  const username = user.username;
+  const username = user?.username;
 
   const fetchCourses = useCallback(async () => {
-    // const { username } = await Auth.currentAuthenticatedUser();
     if (username) {
       try {
         const filter = {
           tutor: { eq: username },
         };
-        // setLoading(true);
         const res = await API.graphql({
-          query: listCourses,
+          query: listCoursesWithEnrollees,
           variables: { filter },
           authMode: "AMAZON_COGNITO_USER_POOLS",
         });
@@ -40,6 +36,10 @@ const Courses = () => {
   useEffect(() => {
     fetchCourses();
   }, [fetchCourses]);
+
+  // useEffect(() => {
+  //   fetchTeacherCourses();
+  // }, [fetchTeacherCourses]);
 
   if (!user) {
     return "Loading...";
@@ -58,10 +58,18 @@ const Courses = () => {
     }
   };
   return (
-    <div>
+    <FramerMotion className="">
       <h1>owners created courses only</h1>
-      <CourseTable courses={courses} removeCourse={removeCourse} />
-    </div>
+      {/* <CourseTable1 courses={courses} removeCourse={removeCourse} /> */}
+      <CourseTable
+        courses={courses}
+        removeCourse={removeCourse}
+        username={username}
+      />
+
+      {/* 
+      <pre>{JSON.stringify(teacherCourses, null, 4)}</pre> */}
+    </FramerMotion>
   );
 };
 Courses.PageLayout = SidebarLayout;

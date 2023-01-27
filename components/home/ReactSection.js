@@ -2,16 +2,18 @@ import { Fragment } from "react";
 import Image from "next/image";
 import ReactImage from "../../public/react.png";
 import Member from "../../public/member1.jpg";
+import { motion, AnimatePresence } from "framer-motion";
 
 const ReactSection = ({ sectionSecond }) => {
   return (
-    <Fragment>
+    < Fragment>
+
       {sectionSecond.map((item) => (
         <div
           className="flex flex-col lg:flex-row items-center justify-between "
           key={item.id}
         >
-          <div className="bg-slate-800 px-4 py-7 rounded-md shadow-md w-full flex items-center relative z-100 ">
+          <motion.div viewport={{ once: false }} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ type: "easeIn", duration: 2.15, delay: 1 * .15 }} className="bg-slate-800 px-4 py-7 rounded-md shadow-md w-full flex items-center relative z-100 ">
             <Image
               height={700}
               width={700}
@@ -32,7 +34,7 @@ const ReactSection = ({ sectionSecond }) => {
               </p>
               <p className="text-sm text-gray-500">{item.subtitle1}</p>
             </div>
-          </div>
+          </motion.div>
           <div className="w-full">
             <Image
               height={700}

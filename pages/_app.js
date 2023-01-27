@@ -6,8 +6,9 @@ import { UserContext } from "../hooks/user/UserContext";
 import { ToastContainer } from "react-toastify";
 import { Auth } from "aws-amplify";
 import "react-toastify/dist/ReactToastify.css";
+import { motion, AnimatePresence } from "framer-motion";
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps, router }) {
   const [user, setUser] = useState("");
 
   useEffect(() => {
@@ -21,26 +22,30 @@ function MyApp({ Component, pageProps }) {
   const value = useMemo(() => ({ user, setUser }), [user, setUser]);
 
   return (
-    <UserContext.Provider value={value}>
-      <Navbar />
-      {Component.PageLayout ? (
-        <Component.PageLayout>
-          <Component {...pageProps} />
-        </Component.PageLayout>
-      ) : (
-        <Component {...pageProps} />
-      )}
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        draggable={false}
-        pauseOnVisibilityChange
-        closeOnClick
-        pauseOnHover
-      />
-    </UserContext.Provider>
+    <AnimatePresence mode="wait" initial={false}>
+      <UserContext.Provider value={value}>
+
+        <Navbar />
+        {Component.PageLayout ? (
+          <Component.PageLayout>
+            <Component {...pageProps} key={router.asPath} />
+          </Component.PageLayout>
+        ) : (
+          <Component {...pageProps} key={router.asPath} />
+        )}
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          draggable={false}
+          pauseOnVisibilityChange
+          closeOnClick
+          pauseOnHover
+        />
+
+      </UserContext.Provider>
+    </AnimatePresence>
   );
 }
 

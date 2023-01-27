@@ -15,22 +15,13 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Navbar({}) {
+export default function Navbar({ }) {
   const router = useRouter();
 
   const { user, setUser } = useContext(UserContext);
 
-  // useEffect(() => {
-  //   async function authListner() {
-  //     const user = await Auth.currentAuthenticatedUser();
-  //     setUser(user);
-  //     setLoading(false);
-  //   }
-  //   authListner();
-  // }, [setUser, setLoading]);
-
   return (
-    <Popover className="relative bg-slate-900">
+    <Popover className=" bg-slate-900 sticky top-0 z-10 backdrop-filter backdrop-blur-lg bg-opacity-30 border-b border-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 ">
         <div className="flex justify-between items-center border-b border-gray-800 py-6 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
@@ -205,21 +196,7 @@ export default function Navbar({}) {
                 </Link>
               </div>
             )}
-            {/* 
-            {user === null && (
-              <div>
-                <Link href="/auth/signIn">
-                  <a className="whitespace-nowrap text-base font-medium hover:text-gray-200 transition ease-in-out">
-                    Sign in
-                  </a>
-                </Link>
-                <Link href="/auth/signUp">
-                  <a className=" transition ease-in-out ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium hover:text-gray-200 bg-indigo-600 hover:bg-indigo-700">
-                    Sign up
-                  </a>
-                </Link>
-              </div>
-            )} */}
+
           </div>
         </div>
       </div>

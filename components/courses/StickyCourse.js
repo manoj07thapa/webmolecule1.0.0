@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
-const StickyCourse = ({ course, image }) => {
+const StickyCourse = ({ course, image, user, addCourseToUser }) => {
   const router = useRouter();
   return (
     <Fragment>
@@ -42,12 +42,23 @@ const StickyCourse = ({ course, image }) => {
           </section>
           {/** course signup section */}
           <section className="px-4 py-2">
-            <button
-              type="submit"
-              className="bg-pink-500 w-full rounded-md shadow-md px-4 py-2 hover:bg-pink-600 transition ease-in-out"
-            >
-              SignUp
-            </button>
+            {user ? (
+              <button
+                type="submit"
+                className="bg-pink-500 w-full rounded-md shadow-md px-4 py-2 hover:bg-pink-600 transition ease-in-out"
+                onClick={addCourseToUser}
+              >
+                Enroll Now
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="bg-pink-500 w-full rounded-md shadow-md px-4 py-2 hover:bg-pink-600 transition ease-in-out"
+                onClick={() => router.push("/auth/signUp")}
+              >
+                SignUp
+              </button>
+            )}
           </section>
         </div>
       </aside>

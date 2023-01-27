@@ -6,8 +6,8 @@ import { ChevronUpIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-export default function SlideOverMenu() {
-  const [open, setOpen] = useState(false);
+export default function SlideOverMenu({ open, setOpen }) {
+  // const [open, setOpen] = useState(false);
   console.log("RenderSLIDEROVER MENU");
   const router = useRouter();
 
@@ -99,9 +99,8 @@ export default function SlideOverMenu() {
                                             Analytics
                                           </span>
                                           <ChevronUpIcon
-                                            className={`${
-                                              open ? "rotate-180 transform" : ""
-                                            } h-5 w-5 `}
+                                            className={`${open ? "rotate-180 transform" : ""
+                                              } h-5 w-5 `}
                                           />
                                         </Disclosure.Button>
                                         <Transition
@@ -135,9 +134,8 @@ export default function SlideOverMenu() {
                                         <Disclosure.Button className=" flex w-full justify-between  px-4 py-2 text-left text-md  tracking-wide  hover:bg-indigo-600 focus:outline-none rounded-md ">
                                           <span>Create</span>
                                           <ChevronUpIcon
-                                            className={`${
-                                              open ? "rotate-180 transform" : ""
-                                            } h-5 w-5 `}
+                                            className={`${open ? "rotate-180 transform" : ""
+                                              } h-5 w-5 `}
                                           />
                                         </Disclosure.Button>
                                         <Transition
@@ -150,12 +148,11 @@ export default function SlideOverMenu() {
                                           className="mt-2 pl-4 border-l border-gray-800 ml-4 space-y-4 text-sm text-gray-400"
                                         >
                                           <Disclosure.Panel
-                                            className={`${
-                                              router.pathname ===
-                                              "/dashboard/course/create"
+                                            className={`${router.pathname ===
+                                                "/dashboard/course/create"
                                                 ? "text-indigo-400 font-bold"
                                                 : ""
-                                            } hover:text-gray-300`}
+                                              } hover:text-gray-300`}
                                           >
                                             <Link href="/dashboard/course/create">
                                               <a>Course</a>
@@ -180,9 +177,8 @@ export default function SlideOverMenu() {
                                         <Disclosure.Button className="flex w-full justify-between text-md  tracking-wide   px-4 py-2 text-left  hover:bg-indigo-600 focus:outline-none rounded-md transition ease-in-out duration-150">
                                           <span>Courses</span>
                                           <ChevronUpIcon
-                                            className={`${
-                                              open ? "rotate-180 transform" : ""
-                                            } h-5 w-5 `}
+                                            className={`${open ? "rotate-180 transform" : ""
+                                              } h-5 w-5 `}
                                           />
                                         </Disclosure.Button>
                                         <Transition
@@ -210,9 +206,8 @@ export default function SlideOverMenu() {
                                         <Disclosure.Button className="flex w-full justify-between text-md  tracking-wide   px-4 py-2 text-left  hover:bg-indigo-600 focus:outline-none rounded-md transition ease-in-out duration-150">
                                           <span>Users</span>
                                           <ChevronUpIcon
-                                            className={`${
-                                              open ? "rotate-180 transform" : ""
-                                            } h-5 w-5 `}
+                                            className={`${open ? "rotate-180 transform" : ""
+                                              } h-5 w-5 `}
                                           />
                                         </Disclosure.Button>
                                         <Transition

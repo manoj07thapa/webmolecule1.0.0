@@ -8,7 +8,7 @@ export const getUser = /* GraphQL */ `
       username
       email
       phone_number
-      courses {
+      enrolledCourses {
         items {
           id
           userID
@@ -37,7 +37,7 @@ export const listUsers = /* GraphQL */ `
         username
         email
         phone_number
-        courses {
+        enrolledCourses {
           nextToken
         }
         createdAt
@@ -71,7 +71,7 @@ export const getCourse = /* GraphQL */ `
         description
         duration
       }
-      users {
+      enrollees {
         items {
           id
           userID
@@ -117,7 +117,7 @@ export const listCourses = /* GraphQL */ `
           description
           duration
         }
-        users {
+        enrollees {
           nextToken
         }
         createdAt
@@ -170,9 +170,9 @@ export const listResources = /* GraphQL */ `
     }
   }
 `;
-export const getUserCourse = /* GraphQL */ `
-  query GetUserCourse($id: ID!) {
-    getUserCourse(id: $id) {
+export const getUserCourses = /* GraphQL */ `
+  query GetUserCourses($id: ID!) {
+    getUserCourses(id: $id) {
       id
       userID
       courseID
@@ -181,7 +181,7 @@ export const getUserCourse = /* GraphQL */ `
         username
         email
         phone_number
-        courses {
+        enrolledCourses {
           nextToken
         }
         createdAt
@@ -209,7 +209,7 @@ export const getUserCourse = /* GraphQL */ `
           description
           duration
         }
-        users {
+        enrollees {
           nextToken
         }
         createdAt
@@ -224,7 +224,7 @@ export const getUserCourse = /* GraphQL */ `
 `;
 export const listUserCourses = /* GraphQL */ `
   query ListUserCourses(
-    $filter: ModelUserCourseFilterInput
+    $filter: ModelUserCoursesFilterInput
     $limit: Int
     $nextToken: String
   ) {
